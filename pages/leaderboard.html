@@ -1,0 +1,92 @@
+<!-- ============================================================
+     LEADERBOARD.HTML — The Great Pixels War
+     Global, season, alliance, friends tabs — period filters,
+     ranked table with win bars, your row pinned, mini profile
+     ============================================================ -->
+
+<div class="lb-page">
+
+  <!-- ── Header ── -->
+  <div class="lb-header">
+    <div class="lb-header__left">
+      <h1 class="lb-header__title">LEADERBOARD</h1>
+      <p class="lb-header__sub">Season 12 — Operation Iron Tide</p>
+    </div>
+    <div class="lb-header__right">
+      <!-- Period filter -->
+      <div class="tab-group tab-group--yellow" id="lbPeriodTabs">
+        <button class="tab-btn tab-btn--active" onclick="setLbPeriod(this,'alltime')">ALL TIME</button>
+        <button class="tab-btn" onclick="setLbPeriod(this,'season')">SEASON 12</button>
+        <button class="tab-btn" onclick="setLbPeriod(this,'week')">THIS WEEK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Category Tabs ── -->
+  <div class="lb-category-tabs">
+    <div class="tab-group tab-group--underline tab-group--cyan">
+      <button class="tab-btn tab-btn--active" onclick="setLbCategory(this,'global')">🌍 GLOBAL</button>
+      <button class="tab-btn" onclick="setLbCategory(this,'season')">🌐 SEASON WAR</button>
+      <button class="tab-btn" onclick="setLbCategory(this,'alliance')">🤝 ALLIANCES</button>
+      <button class="tab-btn" onclick="setLbCategory(this,'friends')">👥 FRIENDS</button>
+    </div>
+    <!-- Search -->
+    <div class="search-wrap" style="width:240px">
+      <input class="search-input" type="text" placeholder="Search player..."
+        oninput="filterLeaderboard(this.value)" aria-label="Search leaderboard">
+    </div>
+  </div>
+
+  <!-- ── Your Rank Banner ── -->
+  <div class="lb-you-banner" id="lbYouBanner">
+    <div class="lb-you-banner__rank">
+      <span class="lb-you-banner__rank-num">#42</span>
+      <span class="lb-you-banner__rank-label">YOUR RANK</span>
+    </div>
+    <div class="lb-you-banner__divider"></div>
+    <div class="lb-you-banner__stats">
+      <div class="lb-you-banner__stat">
+        <span class="lb-you-banner__val">148</span>
+        <span class="lb-you-banner__key">WINS</span>
+      </div>
+      <div class="lb-you-banner__stat">
+        <span class="lb-you-banner__val">70%</span>
+        <span class="lb-you-banner__key">WIN RATE</span>
+      </div>
+      <div class="lb-you-banner__stat">
+        <span class="lb-you-banner__val">3,820</span>
+        <span class="lb-you-banner__key">XP</span>
+      </div>
+      <div class="lb-you-banner__stat">
+        <span class="lb-you-banner__val">Sgt II</span>
+        <span class="lb-you-banner__key">RANK</span>
+      </div>
+    </div>
+    <div class="lb-you-banner__divider"></div>
+    <div class="lb-you-banner__cta">
+      <span class="lb-you-banner__to-next">+284 wins to reach Top 10</span>
+      <button class="btn btn--green btn--sm" onclick="navigate('play')">PLAY NOW ▶</button>
+    </div>
+  </div>
+
+  <!-- ── Leaderboard Table ── -->
+  <div class="lb-content">
+    <div class="game-table px-panel" id="lbTable">
+
+      <!-- Table head -->
+      <div class="lb-table-head" id="lbTableHead">
+        <!-- Populated by leaderboard.js -->
+      </div>
+
+      <!-- Table body -->
+      <div id="lbTableBody" role="rowgroup">
+        <!-- Populated by leaderboard.js -->
+      </div>
+
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="lbPagination" style="margin-top:var(--space-4)"></div>
+  </div>
+
+</div>

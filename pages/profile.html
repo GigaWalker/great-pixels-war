@@ -1,0 +1,111 @@
+<!-- ============================================================
+     PROFILE.HTML — The Great Pixels War
+     Profile header with avatar/wallet/VIP, 6 tabs:
+     Stats, Season History, Cosmetics, Alliance, Achievements,
+     Bid History
+     ============================================================ -->
+
+<div class="profile-page">
+
+  <!-- ── Profile Header ── -->
+  <div class="profile-header">
+    <div class="profile-header__inner">
+
+      <!-- Avatar section -->
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profileAvatar">🪖</div>
+        <div class="profile-avatar__vip" id="profileVipBadge" style="display:none"></div>
+        <button class="btn btn--ghost btn--xs profile-avatar__edit"
+          onclick="openModal('settings'); switchSettingsPanel('account')"
+          title="Edit profile">✏</button>
+      </div>
+
+      <!-- Info block -->
+      <div class="profile-info">
+        <div class="profile-info__top">
+          <h1 class="profile-info__name" id="profileName">GHOST_RECON</h1>
+          <span class="profile-info__title" id="profileTitle">Iron Veteran</span>
+        </div>
+        <div class="profile-info__rank" id="profileRank">⭐ Sergeant II</div>
+        <div class="profile-xp-wrap">
+          <div class="xp-bar-wrap">
+            <div class="xp-bar" id="profileXpBar" style="width:64%"></div>
+          </div>
+          <div class="xp-bar-label">
+            <span id="profileXp">3,820 XP</span>
+            <span>→ <span id="profileXpNext">6,000</span> (Sergeant III)</span>
+          </div>
+        </div>
+        <!-- Flag + join date -->
+        <div class="profile-info__meta">
+          <span class="profile-info__flag" id="profileFlag">🏴</span>
+          <span class="profile-info__join" id="profileJoin">Joined Season 8</span>
+          <span class="profile-info__season" id="profileSeason">Season 12 Active</span>
+        </div>
+      </div>
+
+      <!-- Wallet -->
+      <div class="profile-wallet">
+        <div class="profile-wallet__title">WALLET</div>
+        <div class="wallet">
+          <div class="wallet-item wallet-item--diamond">
+            <span class="wallet-item__icon">💎</span>
+            <div class="wallet-item__info">
+              <span class="wallet-item__amount cur-diamond" id="profileDiamonds">1,240</span>
+              <span class="wallet-item__label">Diamonds</span>
+            </div>
+          </div>
+          <div class="wallet-item wallet-item--gold">
+            <span class="wallet-item__icon">🥇</span>
+            <div class="wallet-item__info">
+              <span class="wallet-item__amount cur-gold" id="profileGold">8,400</span>
+              <span class="wallet-item__label">Gold</span>
+            </div>
+          </div>
+          <div class="wallet-item wallet-item--silver">
+            <span class="wallet-item__icon">🥈</span>
+            <div class="wallet-item__info">
+              <span class="wallet-item__amount cur-silver" id="profileSilver">22,100</span>
+              <span class="wallet-item__label">Silver</span>
+            </div>
+          </div>
+          <div class="wallet-item wallet-item--bronze">
+            <span class="wallet-item__icon">🥉</span>
+            <div class="wallet-item__info">
+              <span class="wallet-item__amount cur-bronze" id="profileBronze">105,300</span>
+              <span class="wallet-item__label">Bronze</span>
+            </div>
+          </div>
+        </div>
+        <!-- Actions -->
+        <div class="profile-wallet__actions">
+          <button class="btn btn--diamond btn--sm" onclick="navigate('shop'); setShopTab(document.getElementById('shopTab-diamonds'),'diamonds')">
+            💎 BUY DIAMONDS
+          </button>
+          <button class="btn btn--ghost btn--sm" onclick="openModal('settings'); switchSettingsPanel('account')">
+            ⚙ EDIT PROFILE
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Profile Tabs ── -->
+  <div class="profile-tabs">
+    <div class="tab-group tab-group--underline tab-group--cyan" id="profileTabGroup">
+      <button class="tab-btn tab-btn--active" onclick="setProfileTab(this,'stats')">📊 STATS</button>
+      <button class="tab-btn" onclick="setProfileTab(this,'seasons')">🏆 SEASON HISTORY</button>
+      <button class="tab-btn" onclick="setProfileTab(this,'cosmetics')">🎨 COSMETICS</button>
+      <button class="tab-btn" onclick="setProfileTab(this,'alliance')">🤝 ALLIANCE</button>
+      <button class="tab-btn" onclick="setProfileTab(this,'achievements')">🎖 ACHIEVEMENTS</button>
+      <button class="tab-btn" onclick="setProfileTab(this,'bids')">🏙 BID HISTORY</button>
+    </div>
+  </div>
+
+  <!-- ── Tab Content ── -->
+  <div class="profile-content" id="profileContent">
+    <!-- Populated by profile.js -->
+  </div>
+
+</div>

@@ -1,0 +1,208 @@
+<!-- ============================================================
+     ABOUT.HTML — The Great Pixels War
+     Game overview, development roadmap, how-to-play,
+     currency guide, team section, social links
+     ============================================================ -->
+
+<div class="about-page">
+
+  <!-- ── Hero ── -->
+  <div class="about-hero pixel-grid-bg">
+    <div class="about-hero__inner">
+      <div class="about-hero__eyebrow">THE</div>
+      <h1 class="about-hero__title">GREAT PIXELS <span style="color:var(--red)">WAR</span></h1>
+      <p class="about-hero__desc">
+        An open-world turn-based strategy game built on real satellite maps.
+        Fight for territory, form alliances, bid on cities, and leave your mark
+        on the real world — one pixel at a time.
+      </p>
+      <div class="about-hero__actions">
+        <button class="btn btn--green btn--lg" onclick="navigate('play')">▶ START PLAYING</button>
+        <button class="btn btn--ghost btn--lg" onclick="navigate('season-war')">🌍 SEASON WAR</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-content">
+
+    <!-- ── Roadmap ── -->
+    <section class="about-section">
+      <div class="section-title">DEVELOPMENT ROADMAP</div>
+      <div class="roadmap">
+        <div class="road-item done">
+          <div class="road-tag road-tag--done">✓ COMPLETE</div>
+          <div class="road-item__title">WEBSITE & FRONTEND</div>
+          <div class="road-item__desc">Homepage, lobby, leaderboard, shop, profile, season war UI, story mode, navigation, modals, chat, auth system, settings.</div>
+        </div>
+        <div class="road-item wip">
+          <div class="road-tag road-tag--wip">⟳ IN PROGRESS</div>
+          <div class="road-item__title">MAP ENGINE v1</div>
+          <div class="road-item__desc">Leaflet.js + Mapbox integration with pixel-art tile style, canvas grid overlay, zoom to 1 km, day/night cycle rendering.</div>
+        </div>
+        <div class="road-item">
+          <div class="road-tag road-tag--plan">PLANNED</div>
+          <div class="road-item__title">TURN SYSTEM & UNIT ENGINE</div>
+          <div class="road-item__desc">Territory ownership, unit movement across tile grid, combat resolution, simultaneous turn processing, fortification mechanics.</div>
+        </div>
+        <div class="road-item">
+          <div class="road-tag road-tag--plan">PLANNED</div>
+          <div class="road-item__title">MULTIPLAYER BACKEND</div>
+          <div class="road-item__desc">Node.js + Socket.io real-time server, Redis game state, PostgreSQL persistence, matchmaking queue, session management.</div>
+        </div>
+        <div class="road-item">
+          <div class="road-tag road-tag--plan">PLANNED</div>
+          <div class="road-item__title">DIPLOMACY & ALLIANCE SYSTEM</div>
+          <div class="road-item__desc">Alliance creation, war declarations, peace treaties, resource trade, diplomacy log, alliance vs alliance game mode.</div>
+        </div>
+        <div class="road-item">
+          <div class="road-tag road-tag--plan">PLANNED</div>
+          <div class="road-item__title">SEASON WAR — CITY BIDDING</div>
+          <div class="road-item__desc">Real sealed-bid auction for cities, 3-day bidding phase, bot defence integration, standing orders, turn advance system.</div>
+        </div>
+        <div class="road-item">
+          <div class="road-tag road-tag--plan">PLANNED</div>
+          <div class="road-item__title">MAP EDITOR</div>
+          <div class="road-item__desc">In-browser pixel map builder — draw territories, place cities, set income, configure win conditions, publish to community.</div>
+        </div>
+        <div class="road-item">
+          <div class="road-tag road-tag--plan">PLANNED</div>
+          <div class="road-item__title">STORY MODE CAMPAIGNS</div>
+          <div class="road-item__desc">3 fully scripted narrative campaigns per season with co-op multiplayer, branching objectives, and seasonal rewards.</div>
+        </div>
+        <div class="road-item">
+          <div class="road-tag road-tag--plan">PLANNED</div>
+          <div class="road-item__title">SHOP & ECONOMY</div>
+          <div class="road-item__desc">Live currency system, real payment integration for Diamonds, VIP subscription tiers, cosmetic equip system.</div>
+        </div>
+        <div class="road-item">
+          <div class="road-tag road-tag--plan">PLANNED</div>
+          <div class="road-item__title">RANKED SEASONS & LEADERBOARD</div>
+          <div class="road-item__desc">Live season ranking, end-of-season reward distribution, alliance leaderboard, historical season archive.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── How To Play ── -->
+    <section class="about-section">
+      <div class="section-title">HOW TO PLAY</div>
+      <div class="about-modes-guide">
+
+        <div class="about-mode-guide">
+          <div class="about-mode-guide__icon">⚡</div>
+          <div class="about-mode-guide__title">QUICK MATCH</div>
+          <div class="about-mode-guide__steps">
+            <div class="about-guide-step"><span>1</span>Click Play → Quick Match</div>
+            <div class="about-guide-step"><span>2</span>Server finds the best available game for your rank</div>
+            <div class="about-guide-step"><span>3</span>Deploy your forces on the starting city</div>
+            <div class="about-guide-step"><span>4</span>Take turns: move units, capture cities, attack enemies</div>
+            <div class="about-guide-step"><span>5</span>Last player standing wins — earn Bronze and XP</div>
+          </div>
+        </div>
+
+        <div class="about-mode-guide">
+          <div class="about-mode-guide__icon">🌍</div>
+          <div class="about-mode-guide__title">SEASON WAR</div>
+          <div class="about-mode-guide__steps">
+            <div class="about-guide-step"><span>1</span>At season start: bid Gold to claim a starting city</div>
+            <div class="about-guide-step"><span>2</span>Each turn: spend income on units, move, attack</div>
+            <div class="about-guide-step"><span>3</span>Form alliances — diplomacy is as powerful as armies</div>
+            <div class="about-guide-step"><span>4</span>Go offline? Bot defends your territory automatically</div>
+            <div class="about-guide-step"><span>5</span>Season ends — top players earn Diamonds and medals</div>
+          </div>
+        </div>
+
+        <div class="about-mode-guide">
+          <div class="about-mode-guide__icon">📖</div>
+          <div class="about-mode-guide__title">STORY MODE</div>
+          <div class="about-mode-guide__steps">
+            <div class="about-guide-step"><span>1</span>Choose a chapter from the current season's campaign</div>
+            <div class="about-guide-step"><span>2</span>Select solo, co-op (2–4), or competitive (up to 8)</div>
+            <div class="about-guide-step"><span>3</span>Follow the narrative objectives — not just survival</div>
+            <div class="about-guide-step"><span>4</span>Complete all 3 chapters to unlock the season finale</div>
+            <div class="about-guide-step"><span>5</span>Earn Silver, Bronze, story medals and lore entries</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Currency Guide ── -->
+    <section class="about-section">
+      <div class="section-title">CURRENCY GUIDE</div>
+      <div class="about-currency-guide">
+
+        <div class="about-currency-row">
+          <span class="about-currency-row__icon">🥉</span>
+          <div class="about-currency-row__info">
+            <div class="about-currency-row__name" style="color:var(--bronze)">BRONZE</div>
+            <div class="about-currency-row__desc">Earned every game — participation rewards, season minimum. Buys <span style="color:var(--tier-common)">Common tier</span> cosmetics. City bidding: no.</div>
+          </div>
+        </div>
+
+        <div class="about-currency-row">
+          <span class="about-currency-row__icon">🥈</span>
+          <div class="about-currency-row__info">
+            <div class="about-currency-row__name" style="color:var(--silver)">SILVER</div>
+            <div class="about-currency-row__desc">Earned from wins, top-50 season finishes, story mode. Buys <span style="color:var(--tier-veteran)">Veteran tier</span> cosmetics. City bidding: no.</div>
+          </div>
+        </div>
+
+        <div class="about-currency-row">
+          <span class="about-currency-row__icon">🥇</span>
+          <div class="about-currency-row__info">
+            <div class="about-currency-row__name" style="color:var(--gold)">GOLD</div>
+            <div class="about-currency-row__desc">Earned from ranked play, top-10 season finishes. Buys <span style="color:var(--tier-elite)">Elite tier</span> cosmetics. Also used for <strong>Season War city bidding</strong>.</div>
+          </div>
+        </div>
+
+        <div class="about-currency-row">
+          <span class="about-currency-row__icon">💎</span>
+          <div class="about-currency-row__info">
+            <div class="about-currency-row__name" style="color:var(--diamond)">DIAMONDS</div>
+            <div class="about-currency-row__desc">Bought with real money or earned as top season rewards (1 minimum per participant). Buys <span style="color:var(--tier-command)">Command tier</span> cosmetics, <span style="color:var(--vip-gold)">Gold VIP</span>, bundles, and exclusive items. <span style="color:var(--vip-diamond)">Diamond VIP</span> is real money only.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Team ── -->
+    <section class="about-section">
+      <div class="section-title">THE TEAM</div>
+      <div class="team-grid">
+        <div class="team-card"><span class="team-card__avatar">👨‍💻</span><div class="team-card__name">PIXEL_GENERAL</div><div class="team-card__role">Lead Dev / Engine</div></div>
+        <div class="team-card"><span class="team-card__avatar">🎨</span><div class="team-card__name">ARTCOMMANDER</div><div class="team-card__role">Pixel Art & UI Design</div></div>
+        <div class="team-card"><span class="team-card__avatar">🗄️</span><div class="team-card__name">DATASERGEANT</div><div class="team-card__role">Backend & Infrastructure</div></div>
+        <div class="team-card"><span class="team-card__avatar">🎵</span><div class="team-card__name">CHIPTUNE_OPS</div><div class="team-card__role">Sound & Music</div></div>
+        <div class="team-card"><span class="team-card__avatar">⚖</span><div class="team-card__name">BALANCEMASTER</div><div class="team-card__role">Game Design & Balance</div></div>
+        <div class="team-card"><span class="team-card__avatar">🌍</span><div class="team-card__name">MAPWARDEN</div><div class="team-card__role">Map & World Systems</div></div>
+      </div>
+    </section>
+
+    <!-- ── Social Links ── -->
+    <section class="about-section" style="text-align:center">
+      <div class="section-title">JOIN THE COMMUNITY</div>
+      <div style="display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap">
+        <button class="btn btn--blue btn--lg" onclick="showToast('Discord coming soon!','info')">💬 DISCORD</button>
+        <button class="btn btn--ghost btn--lg" onclick="showToast('GitHub coming soon!','info')">⌨ GITHUB</button>
+        <button class="btn btn--ghost btn--lg" onclick="showToast('Reddit coming soon!','info')">📋 REDDIT</button>
+        <button class="btn btn--ghost btn--lg" onclick="showToast('Twitter coming soon!','info')">🐦 TWITTER</button>
+      </div>
+      <p style="margin-top:var(--space-6);font-size:var(--mono-md);color:var(--text-muted)">
+        The Great Pixels War is an independent project. All feedback and contributions welcome.
+      </p>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="footer-logo">THE GREAT PIXELS WAR</div>
+    <ul class="footer-links">
+      <li><a href="#" onclick="return false">Privacy</a></li>
+      <li><a href="#" onclick="return false">Terms</a></li>
+      <li><a href="#" onclick="return false">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 The Great Pixels War. All rights reserved.</div>
+  </footer>
+
+</div>

@@ -1,0 +1,394 @@
+<!-- ============================================================
+     SEASON-WAR.HTML — The Great Pixels War
+     Season header, three-column layout: city bids (left),
+     world map placeholder (center), leaderboard (right),
+     turn status bar at bottom
+     ============================================================ -->
+
+<div class="sw-page">
+
+  <!-- ── Season Header ── -->
+  <div class="sw-header">
+    <div class="sw-header__left">
+      <div class="sw-header__season-label">SEASON 12</div>
+      <h1 class="sw-header__title">OPERATION IRON TIDE</h1>
+      <div class="sw-header__dates">Oct 1 — Dec 31, 2026 &nbsp;•&nbsp; 18 days remaining</div>
+    </div>
+
+    <div class="sw-header__center">
+      <!-- Phase indicator -->
+      <div class="sw-phase" id="swPhase">
+        <div class="sw-phase__item sw-phase__item--done">
+          <div class="sw-phase__dot"></div>
+          <span>SEASON START</span>
+        </div>
+        <div class="sw-phase__line sw-phase__line--done"></div>
+        <div class="sw-phase__item sw-phase__item--active">
+          <div class="sw-phase__dot sw-phase__dot--active"></div>
+          <span>CITY BIDDING</span>
+        </div>
+        <div class="sw-phase__line"></div>
+        <div class="sw-phase__item">
+          <div class="sw-phase__dot"></div>
+          <span>WAR PHASE</span>
+        </div>
+        <div class="sw-phase__line"></div>
+        <div class="sw-phase__item">
+          <div class="sw-phase__dot"></div>
+          <span>SEASON END</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sw-header__right">
+      <!-- Bid countdown -->
+      <div class="sw-bid-countdown" id="swBidCountdown">
+        <div class="sw-bid-countdown__label">BID PHASE ENDS</div>
+        <div class="sw-bid-countdown__timer">
+          <span class="sw-bid-countdown__num" id="swBidDays">2</span>
+          <span class="sw-bid-countdown__sep">D</span>
+          <span class="sw-bid-countdown__num" id="swBidHours">14</span>
+          <span class="sw-bid-countdown__sep">H</span>
+          <span class="sw-bid-countdown__num" id="swBidMins">32</span>
+          <span class="sw-bid-countdown__sep">M</span>
+        </div>
+      </div>
+      <!-- My territory -->
+      <div class="sw-my-territory">
+        <div class="sw-my-territory__label">MY TERRITORY</div>
+        <div class="sw-my-territory__value" id="swMyTerritory">0 tiles</div>
+        <div class="sw-my-territory__rank">Rank: <span id="swMyRank">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Three-column body ── -->
+  <div class="sw-body">
+
+    <!-- LEFT: City Bids -->
+    <div class="sw-left">
+
+      <!-- My Bids -->
+      <div class="sw-panel" id="swMyBidsPanel">
+        <div class="sw-panel__header">
+          <span class="sw-panel__title">MY BIDS</span>
+          <span class="sw-panel__count" id="swMyBidCount">3 active</span>
+        </div>
+        <div class="sw-panel__body" id="swMyBidsList">
+          <!-- Populated by season-war.js -->
+        </div>
+        <div class="sw-panel__footer">
+          <button class="btn btn--yellow btn--sm" onclick="showAllBids()">VIEW ALL BIDS</button>
+        </div>
+      </div>
+
+      <!-- Top Contested Cities -->
+      <div class="sw-panel">
+        <div class="sw-panel__header">
+          <span class="sw-panel__title">HOT CITIES</span>
+          <span class="sw-panel__count">By bid activity</span>
+        </div>
+        <div class="sw-panel__body" id="swHotCities">
+          <!-- Populated by season-war.js -->
+        </div>
+      </div>
+
+      <!-- Standing Orders (bot behaviour) -->
+      <div class="sw-panel">
+        <div class="sw-panel__header">
+          <span class="sw-panel__title">BOT ORDERS</span>
+          <span class="sw-panel__count">When offline</span>
+        </div>
+        <div class="sw-panel__body">
+          <div class="sw-orders">
+            <label class="checkbox-wrap sw-order-item">
+              <input class="form-checkbox" type="checkbox" checked>
+              <div>
+                <div class="checkbox-label">Defend all cities</div>
+                <small style="color:var(--text-muted);font-size:var(--mono-sm)">Bot defends any attack on your territory</small>
+              </div>
+            </label>
+            <label class="checkbox-wrap sw-order-item">
+              <input class="form-checkbox" type="checkbox">
+              <div>
+                <div class="checkbox-label">Attack if win chance 100%</div>
+                <small style="color:var(--text-muted);font-size:var(--mono-sm)">Bot only attacks guaranteed wins</small>
+              </div>
+            </label>
+            <label class="checkbox-wrap sw-order-item">
+              <input class="form-checkbox" type="checkbox" checked>
+              <div>
+                <div class="checkbox-label">Build income structures</div>
+                <small style="color:var(--text-muted);font-size:var(--mono-sm)">Bot spends income on Barracks & Factories</small>
+              </div>
+            </label>
+            <label class="checkbox-wrap sw-order-item">
+              <input class="form-checkbox" type="checkbox">
+              <div>
+                <div class="checkbox-label">Fortify borders</div>
+                <small style="color:var(--text-muted);font-size:var(--mono-sm)">Bot places units on contested borders</small>
+              </div>
+            </label>
+          </div>
+          <button class="btn btn--ghost btn--sm" style="width:100%;margin-top:var(--space-3)"
+            onclick="showToast('Standing orders saved','success')">
+            SAVE ORDERS
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CENTER: World Map -->
+    <div class="sw-center">
+
+      <!-- Map toolbar -->
+      <div class="sw-map-toolbar">
+        <div class="sw-map-toolbar__left">
+          <button class="btn btn--ghost btn--xs sw-map-btn sw-map-btn--active" onclick="setMapView(this,'territories')" title="Territory view">🗺 TERRITORIES</button>
+          <button class="btn btn--ghost btn--xs sw-map-btn" onclick="setMapView(this,'alliances')" title="Alliance view">🤝 ALLIANCES</button>
+          <button class="btn btn--ghost btn--xs sw-map-btn" onclick="setMapView(this,'income')" title="Income view">🥇 INCOME</button>
+        </div>
+        <div class="sw-map-toolbar__right">
+          <div class="sw-day-night" id="swDayNight">
+            <span class="sw-day-night__icon" id="swDayNightIcon">🌙</span>
+            <span class="sw-day-night__label" id="swDayNightLabel">NIGHT</span>
+          </div>
+          <button class="btn btn--ghost btn--xs" onclick="showToast('Zoom in — map engine coming soon!','info')">＋</button>
+          <button class="btn btn--ghost btn--xs" onclick="showToast('Zoom out — map engine coming soon!','info')">－</button>
+        </div>
+      </div>
+
+      <!-- Map placeholder -->
+      <div class="sw-map-container" id="swMapContainer">
+        <svg class="sw-map-svg" viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="sw-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(57,255,106,0.06)" stroke-width="0.5"/>
+            </pattern>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Ocean background -->
+          <rect width="800" height="460" fill="#0a1628"/>
+          <rect width="800" height="460" fill="url(#sw-grid)"/>
+
+          <!-- Continents (simplified) -->
+          <!-- North America -->
+          <polygon points="60,60 200,50 240,100 220,180 180,220 120,210 70,170 50,120" fill="rgba(57,255,106,0.2)" stroke="rgba(57,255,106,0.5)" stroke-width="1.5"/>
+          <!-- South America -->
+          <polygon points="160,240 220,230 240,290 230,370 190,400 160,390 140,340 145,280" fill="rgba(255,58,58,0.18)" stroke="rgba(255,58,58,0.45)" stroke-width="1.5"/>
+          <!-- Europe -->
+          <polygon points="350,50 420,45 450,90 430,130 390,150 360,140 340,100 345,65" fill="rgba(245,200,66,0.2)" stroke="rgba(245,200,66,0.5)" stroke-width="1.5"/>
+          <!-- Africa -->
+          <polygon points="360,160 420,150 450,200 440,310 410,370 380,380 355,340 345,260 350,200" fill="rgba(245,200,66,0.15)" stroke="rgba(245,200,66,0.4)" stroke-width="1.5"/>
+          <!-- Russia/Asia -->
+          <polygon points="450,30 680,25 720,80 700,150 640,180 560,200 500,180 460,140 440,80" fill="rgba(0,229,255,0.15)" stroke="rgba(0,229,255,0.4)" stroke-width="1.5"/>
+          <!-- Middle East -->
+          <polygon points="450,155 510,145 530,190 510,230 470,240 445,210 440,175" fill="rgba(79,195,247,0.15)" stroke="rgba(79,195,247,0.35)" stroke-width="1.5"/>
+          <!-- South Asia -->
+          <polygon points="530,195 590,185 620,230 610,280 575,300 540,290 520,250" fill="rgba(57,255,106,0.12)" stroke="rgba(57,255,106,0.3)" stroke-width="1.5"/>
+          <!-- East Asia -->
+          <polygon points="630,120 720,110 740,160 720,210 670,230 630,220 610,180 615,140" fill="rgba(255,58,58,0.15)" stroke="rgba(255,58,58,0.35)" stroke-width="1.5"/>
+          <!-- SE Asia -->
+          <polygon points="640,240 700,230 730,270 720,310 680,320 650,300 635,270" fill="rgba(245,200,66,0.12)" stroke="rgba(245,200,66,0.3)" stroke-width="1.5"/>
+          <!-- Australia -->
+          <polygon points="660,340 740,330 760,380 740,420 690,430 655,410 645,375" fill="rgba(0,229,255,0.12)" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"/>
+
+          <!-- City markers -->
+          <g filter="url(#glow)">
+            <!-- Your city (flashing) -->
+            <circle cx="375" cy="90" r="6" fill="#39ff6a" opacity="0.9">
+              <animate attributeName="r" values="5;8;5" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Other cities -->
+            <circle cx="140" cy="130" r="4" fill="#ff3a3a" opacity="0.8"/>
+            <circle cx="195" cy="320" r="3" fill="#ff3a3a" opacity="0.7"/>
+            <circle cx="390" cy="250" r="4" fill="#f5c842" opacity="0.8"/>
+            <circle cx="580" cy="120" r="4" fill="#00e5ff" opacity="0.8"/>
+            <circle cx="660" cy="165" r="3" fill="#ff3a3a" opacity="0.7"/>
+            <circle cx="680" cy="375" r="3" fill="#00e5ff" opacity="0.7"/>
+            <circle cx="490" cy="190" r="3" fill="#4fc3f7" opacity="0.7"/>
+            <circle cx="555" cy="245" r="3" fill="#39ff6a" opacity="0.6"/>
+          </g>
+
+          <!-- Unit movement arrow (decorative) -->
+          <line x1="375" y1="90" x2="410" y2="70" stroke="#39ff6a" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6">
+            <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.5s" repeatCount="indefinite"/>
+          </line>
+
+          <!-- Battle markers -->
+          <text x="420" y="68" font-size="14" opacity="0.7">⚔</text>
+
+          <!-- Legend -->
+          <rect x="10" y="420" width="10" height="10" fill="rgba(57,255,106,0.4)"/>
+          <text x="24" y="430" font-family="monospace" font-size="10" fill="#5a7099">YOU</text>
+          <rect x="60" y="420" width="10" height="10" fill="rgba(255,58,58,0.4)"/>
+          <text x="74" y="430" font-family="monospace" font-size="10" fill="#5a7099">ENEMY</text>
+          <rect x="120" y="420" width="10" height="10" fill="rgba(0,229,255,0.4)"/>
+          <text x="134" y="430" font-family="monospace" font-size="10" fill="#5a7099">ALLY</text>
+          <rect x="175" y="420" width="10" height="10" fill="rgba(245,200,66,0.4)"/>
+          <text x="189" y="430" font-family="monospace" font-size="10" fill="#5a7099">NEUTRAL</text>
+        </svg>
+
+        <!-- Map overlay text -->
+        <div class="sw-map-overlay">
+          <div class="sw-map-overlay__title">WORLD MAP</div>
+          <div class="sw-map-overlay__sub">Full satellite map engine coming in Phase 2</div>
+          <button class="btn btn--green btn--sm" onclick="showToast('Zooming to your city...','success')">
+            📍 MY CITY
+          </button>
+        </div>
+      </div>
+
+      <!-- Alliance quick panel -->
+      <div class="sw-alliance-bar">
+        <div class="sw-alliance-bar__info">
+          <span class="sw-alliance-bar__label">ALLIANCE:</span>
+          <span class="sw-alliance-bar__name" id="swAllianceName">No Alliance</span>
+        </div>
+        <div class="sw-alliance-bar__actions">
+          <button class="btn btn--cyan btn--xs" onclick="openAllianceModal(null)">🤝 MANAGE</button>
+          <button class="btn btn--ghost btn--xs" onclick="openChatTab('alliance')">💬 CHAT</button>
+          <button class="btn btn--yellow btn--xs" onclick="showToast('Diplomacy panel coming soon!','info')">⚖ DIPLOMACY</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Leaderboard + Season Info -->
+    <div class="sw-right">
+
+      <!-- Season Leaderboard -->
+      <div class="sw-panel">
+        <div class="sw-panel__header">
+          <span class="sw-panel__title">SEASON RANKINGS</span>
+          <button class="btn btn--ghost btn--xs" onclick="navigate('leaderboard')">FULL ▶</button>
+        </div>
+        <div class="sw-panel__body" id="swLeaderboard">
+          <!-- Populated by season-war.js -->
+        </div>
+      </div>
+
+      <!-- Season Rewards Preview -->
+      <div class="sw-panel">
+        <div class="sw-panel__header">
+          <span class="sw-panel__title">SEASON REWARDS</span>
+          <span class="sw-panel__count">Based on your rank</span>
+        </div>
+        <div class="sw-panel__body">
+          <div class="sw-rewards">
+
+            <div class="sw-reward-row sw-reward-row--highlight">
+              <span class="sw-reward-row__rank">👑 1st</span>
+              <div class="sw-reward-row__items">
+                <span class="cur-diamond">💎 5,000</span>
+                <span class="cur-gold">🥇 10,000</span>
+              </div>
+            </div>
+            <div class="sw-reward-row">
+              <span class="sw-reward-row__rank">🥈 2nd</span>
+              <div class="sw-reward-row__items">
+                <span class="cur-diamond">💎 3,000</span>
+                <span class="cur-gold">🥇 7,000</span>
+              </div>
+            </div>
+            <div class="sw-reward-row">
+              <span class="sw-reward-row__rank">🥉 3rd</span>
+              <div class="sw-reward-row__items">
+                <span class="cur-diamond">💎 2,000</span>
+                <span class="cur-gold">🥇 5,000</span>
+              </div>
+            </div>
+            <div class="sw-reward-row">
+              <span class="sw-reward-row__rank">🏅 Top 10</span>
+              <div class="sw-reward-row__items">
+                <span class="cur-diamond">💎 1,000</span>
+                <span class="cur-gold">🥇 2,000</span>
+              </div>
+            </div>
+            <div class="sw-reward-row">
+              <span class="sw-reward-row__rank">🎖 All</span>
+              <div class="sw-reward-row__items">
+                <span class="cur-diamond">💎 1</span>
+                <span class="cur-gold">🥇 10</span>
+                <span class="cur-silver">🥈 100</span>
+                <span class="cur-bronze">🥉 1,000</span>
+              </div>
+            </div>
+
+            <!-- VIP bonus note -->
+            <div class="sw-reward-vip-note">
+              <span style="color:var(--vip-gold)">👑 Gold VIP</span> +25% &nbsp;|&nbsp;
+              <span style="color:var(--vip-diamond)">💎 Diamond VIP</span> +50%
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="sw-panel">
+        <div class="sw-panel__header">
+          <span class="sw-panel__title">SEASON STATS</span>
+        </div>
+        <div class="sw-panel__body">
+          <div class="sw-stat-list" id="swSeasonStats">
+            <div class="sw-stat-row">
+              <span class="sw-stat-row__label">Players in Season</span>
+              <span class="sw-stat-row__val">47,284</span>
+            </div>
+            <div class="sw-stat-row">
+              <span class="sw-stat-row__label">Cities Claimed</span>
+              <span class="sw-stat-row__val">9,841</span>
+            </div>
+            <div class="sw-stat-row">
+              <span class="sw-stat-row__label">Alliances Formed</span>
+              <span class="sw-stat-row__val">1,204</span>
+            </div>
+            <div class="sw-stat-row">
+              <span class="sw-stat-row__label">Battles Fought</span>
+              <span class="sw-stat-row__val">284,192</span>
+            </div>
+            <div class="sw-stat-row">
+              <span class="sw-stat-row__label">Current Turn</span>
+              <span class="sw-stat-row__val" id="swCurrentTurn">Turn 12</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ── TURN STATUS BAR ── -->
+  <div class="turn-bar" id="swTurnBar">
+    <div class="turn-bar__item">
+      <span class="turn-bar__label">TURN</span>
+      <span class="turn-bar__value" id="swTurnNum">12 / ∞</span>
+    </div>
+    <div class="turn-bar__item">
+      <span class="turn-bar__label">TURN ENDS</span>
+      <span class="turn-bar__value turn-bar__value--warning" id="swTurnTimer">23h 41m</span>
+    </div>
+    <div class="turn-bar__item">
+      <span class="turn-bar__label">YOUR STATUS</span>
+      <span class="turn-bar__value turn-bar__value--bot" id="swTurnStatus">🤖 BOT ACTIVE</span>
+    </div>
+    <div class="turn-bar__item">
+      <span class="turn-bar__label">CITIES HELD</span>
+      <span class="turn-bar__value" id="swCitiesHeld">0</span>
+    </div>
+    <div class="turn-bar__actions">
+      <button class="btn btn--green btn--sm" onclick="handleTakeTurn()">▶ TAKE TURN</button>
+      <button class="btn btn--yellow btn--sm" onclick="showToast('Standing orders panel','info')">🤖 BOT ORDERS</button>
+      <button class="btn btn--ghost btn--sm" onclick="navigate('lobby')">◀ LOBBY</button>
+    </div>
+  </div>
+
+</div>

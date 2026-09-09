@@ -1,0 +1,351 @@
+<!-- ============================================================
+     STORY.HTML — The Great Pixels War
+     Season arc header, 3 chapter cards, active multiplayer
+     story sessions, past seasons accordion
+     ============================================================ -->
+
+<div class="story-page">
+
+  <!-- ── Arc Header ── -->
+  <div class="story-arc-header">
+    <div class="story-arc-header__inner">
+      <div class="story-arc-header__season">SEASON 12 CAMPAIGN</div>
+      <h1 class="story-arc-header__title">OPERATION IRON TIDE</h1>
+      <p class="story-arc-header__lore">
+        The old alliances have crumbled. Three superpowers race to fill the vacuum —
+        each with a claim to the fallen cities of Eastern Europe.
+        Choose your side. The continent will not survive divided.
+      </p>
+      <div class="story-arc-header__meta">
+        <span class="story-arc-meta-item">📖 3 Chapters</span>
+        <span class="story-arc-meta-item">🗺 Tier II–III Maps</span>
+        <span class="story-arc-meta-item">👥 Solo · Co-op · Competitive</span>
+        <span class="story-arc-meta-item">🥈 Silver + Medal Rewards</span>
+      </div>
+    </div>
+    <div class="story-arc-header__progress">
+      <div class="story-arc-progress">
+        <div class="story-arc-progress__label">YOUR PROGRESS</div>
+        <div class="story-arc-progress__bar-wrap">
+          <div class="story-arc-progress__bar" style="width:33%"></div>
+        </div>
+        <div class="story-arc-progress__text">1 of 3 chapters complete</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Mode Toggle ── -->
+  <div class="story-mode-toggle">
+    <div class="story-mode-toggle__inner">
+      <span class="story-mode-toggle__label">PLAY AS:</span>
+      <div class="tab-group">
+        <button class="tab-btn tab-btn--active" onclick="setStoryMode(this,'solo')" id="storyTabSolo">SOLO</button>
+        <button class="tab-btn" onclick="setStoryMode(this,'coop')" id="storyTabCoop">CO-OP (2–4)</button>
+        <button class="tab-btn" onclick="setStoryMode(this,'competitive')" id="storyTabCompetitive">COMPETITIVE (5–8)</button>
+      </div>
+      <div class="story-mode-toggle__desc" id="storyModeDesc">
+        Play through each chapter alone against AI opponents.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Chapter Cards ── -->
+  <div class="story-content">
+    <div class="story-section-title">
+      <div class="section-title">SEASON 12 CHAPTERS</div>
+    </div>
+
+    <div class="story-chapters-grid">
+
+      <!-- Chapter 1 — Complete -->
+      <div class="chapter-card" id="chapter1" onclick="handleChapterClick(1, 'complete')">
+        <div class="chapter-card__preview">
+          <span style="font-size:52px;z-index:1">🏰</span>
+          <div class="chapter-card__complete-overlay">✅</div>
+        </div>
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">CHAPTER 1</span>
+          <div class="chapter-card__title">THE FALL OF THE EASTERN PACT</div>
+          <p class="chapter-card__desc">
+            The Eastern Pact has collapsed overnight. Three cities — Warsaw, Prague, and Bratislava —
+            are undefended. Your mission: secure them before the other factions arrive.
+          </p>
+          <div class="chapter-card__meta">
+            <div style="display:flex;gap:var(--space-2);flex-wrap:wrap">
+              <span class="badge badge--waiting" style="border-color:var(--green);color:var(--green)">✓ COMPLETE</span>
+              <span class="badge badge--waiting">🗺 REGIONAL</span>
+              <span class="badge badge--waiting">⏱ ~90 min</span>
+            </div>
+            <div class="chapter-card__reward">
+              <span class="cur-silver">🥈 500</span>
+              <span>🎖 Medal</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-card__footer">
+          <button class="btn btn--ghost btn--sm" onclick="event.stopPropagation(); replayChapter(1)">↺ REPLAY</button>
+          <button class="btn btn--green btn--sm" onclick="event.stopPropagation(); startChapter(1)">▶ PLAY AGAIN</button>
+        </div>
+      </div>
+
+      <!-- Chapter 2 — Active -->
+      <div class="chapter-card chapter-card--active" id="chapter2" onclick="handleChapterClick(2, 'available')">
+        <div class="chapter-card__preview">
+          <span style="font-size:52px;z-index:1">🌊</span>
+        </div>
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">CHAPTER 2</span>
+          <div class="chapter-card__title">THE DANUBE CROSSING</div>
+          <p class="chapter-card__desc">
+            Control of the Danube river means control of Central Europe.
+            Push south while holding your northern flank from a relentless counterattack.
+            Naval units are key — build your fleet or lose the crossing.
+          </p>
+          <div class="chapter-card__meta">
+            <div style="display:flex;gap:var(--space-2);flex-wrap:wrap">
+              <span class="badge badge--live">● AVAILABLE</span>
+              <span class="badge badge--waiting">🗺 CONTINENTAL</span>
+              <span class="badge badge--waiting">⏱ ~2 hours</span>
+            </div>
+            <div class="chapter-card__reward">
+              <span class="cur-silver">🥈 1,200</span>
+              <span class="cur-bronze">🥉 2,000</span>
+              <span>🎖 Medal</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-card__footer">
+          <button class="btn btn--ghost btn--sm" onclick="event.stopPropagation(); showToast('Find an existing session below','info')">JOIN SESSION</button>
+          <button class="btn btn--green btn--lg" onclick="event.stopPropagation(); startChapter(2)">▶ PLAY NOW</button>
+        </div>
+      </div>
+
+      <!-- Chapter 3 — Locked -->
+      <div class="chapter-card locked" id="chapter3" onclick="handleChapterClick(3, 'locked')">
+        <div class="chapter-card__preview">
+          <span style="font-size:52px;z-index:1;opacity:0.3">🏴</span>
+          <div class="chapter-card__complete-overlay" style="background:rgba(0,0,0,0.6);font-size:28px">🔒</div>
+        </div>
+        <div class="chapter-card__body">
+          <span class="chapter-card__num">CHAPTER 3</span>
+          <div class="chapter-card__title">THE SIEGE OF VIENNA</div>
+          <p class="chapter-card__desc">
+            The final confrontation. All factions converge on Vienna for the decisive battle.
+            Diplomacy collapses. Only one power can claim the continent.
+          </p>
+          <div class="chapter-card__meta">
+            <div style="display:flex;gap:var(--space-2);flex-wrap:wrap">
+              <span class="badge badge--full">🔒 LOCKED</span>
+              <span class="badge badge--waiting" style="opacity:0.5">🗺 CONTINENTAL</span>
+              <span class="badge badge--waiting" style="opacity:0.5">⏱ ~3 hours</span>
+            </div>
+            <div class="chapter-card__reward" style="opacity:0.5">
+              <span class="cur-diamond">💎 100</span>
+              <span class="cur-silver">🥈 3,000</span>
+              <span>🏆 Trophy</span>
+            </div>
+          </div>
+        </div>
+        <div class="chapter-card__footer">
+          <div style="font-family:var(--font-pixel);font-size:var(--px-xs);color:var(--text-muted);letter-spacing:1px;text-align:center;width:100%">
+            COMPLETE CHAPTER 2 TO UNLOCK
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Active Multiplayer Sessions ── -->
+    <div class="story-section-title" style="margin-top:var(--space-8)">
+      <div class="section-title">ACTIVE STORY SESSIONS</div>
+    </div>
+
+    <div class="game-table px-panel" id="storySessionsTable">
+      <div class="game-table__head">
+        <div class="game-table__th">SESSION</div>
+        <div class="game-table__th">CHAPTER</div>
+        <div class="game-table__th">MODE</div>
+        <div class="game-table__th">PLAYERS</div>
+        <div class="game-table__th">STATUS</div>
+        <div class="game-table__th"></div>
+      </div>
+
+      <div class="game-row" onclick="joinStorySession('ss001')">
+        <div class="game-row__name">
+          Iron Tide Ch.2 — Squad Alpha
+          <small class="game-row__host">by IronWolf</small>
+        </div>
+        <div><span class="game-row__map-badge">📖 Chapter 2</span></div>
+        <div><span class="badge badge--waiting" style="border-color:var(--cyan);color:var(--cyan)">CO-OP</span></div>
+        <div class="game-row__players"><span class="ok">2</span>/4</div>
+        <div><span class="badge badge--wait">WAITING</span></div>
+        <div class="game-row__actions">
+          <button class="btn btn--green btn--xs" onclick="event.stopPropagation(); joinStorySession('ss001')">JOIN</button>
+        </div>
+      </div>
+
+      <div class="game-row" onclick="joinStorySession('ss002')">
+        <div class="game-row__name">
+          Danube Crossing — Competitive
+          <small class="game-row__host">by StormBreaker</small>
+        </div>
+        <div><span class="game-row__map-badge">📖 Chapter 2</span></div>
+        <div><span class="badge badge--waiting" style="border-color:var(--red);color:var(--red)">COMPETITIVE</span></div>
+        <div class="game-row__players"><span class="ok">5</span>/8</div>
+        <div><span class="badge badge--live">● LIVE</span></div>
+        <div class="game-row__actions">
+          <button class="btn btn--cyan btn--xs" onclick="event.stopPropagation(); watchStorySession('ss002')">WATCH</button>
+        </div>
+      </div>
+
+      <div class="game-row" onclick="joinStorySession('ss003')">
+        <div class="game-row__name">
+          Eastern Pact Ch.1 Replay
+          <small class="game-row__host">by Pixelator</small>
+        </div>
+        <div><span class="game-row__map-badge">📖 Chapter 1</span></div>
+        <div><span class="badge badge--waiting" style="border-color:var(--cyan);color:var(--cyan)">CO-OP</span></div>
+        <div class="game-row__players"><span class="ok">1</span>/4</div>
+        <div><span class="badge badge--wait">WAITING</span></div>
+        <div class="game-row__actions">
+          <button class="btn btn--green btn--xs" onclick="event.stopPropagation(); joinStorySession('ss003')">JOIN</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Past Seasons Archive ── -->
+    <div class="story-section-title" style="margin-top:var(--space-8)">
+      <div class="section-title">PAST SEASON ARCHIVES</div>
+    </div>
+
+    <div class="story-archive" id="storyArchive">
+
+      <div class="story-archive-season" onclick="toggleArchive('s11')">
+        <div class="story-archive-season__header">
+          <div>
+            <span class="story-archive-season__num">SEASON 11</span>
+            <span class="story-archive-season__name">Operation Desert Veil</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-3)">
+            <span class="badge badge--waiting" style="border-color:var(--green);color:var(--green)">✓ 3/3 COMPLETE</span>
+            <span class="story-archive-season__toggle" id="toggle-s11">▾</span>
+          </div>
+        </div>
+        <div class="story-archive-season__body" id="archive-s11" style="display:none">
+          <div class="story-archive-chapters">
+            <div class="story-archive-chapter story-archive-chapter--done">
+              <span>📖 Ch.1: The Sahara Incursion</span>
+              <button class="btn btn--ghost btn--xs" onclick="event.stopPropagation(); replayChapter('s11-1')">↺ REPLAY</button>
+            </div>
+            <div class="story-archive-chapter story-archive-chapter--done">
+              <span>📖 Ch.2: Red Sea Gambit</span>
+              <button class="btn btn--ghost btn--xs" onclick="event.stopPropagation(); replayChapter('s11-2')">↺ REPLAY</button>
+            </div>
+            <div class="story-archive-chapter story-archive-chapter--done">
+              <span>📖 Ch.3: The Cairo Endgame</span>
+              <button class="btn btn--ghost btn--xs" onclick="event.stopPropagation(); replayChapter('s11-3')">↺ REPLAY</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-archive-season" onclick="toggleArchive('s10')">
+        <div class="story-archive-season__header">
+          <div>
+            <span class="story-archive-season__num">SEASON 10</span>
+            <span class="story-archive-season__name">Operation Arctic Storm</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--space-3)">
+            <span class="badge badge--waiting" style="border-color:var(--yellow);color:var(--yellow)">🥈 2/3 COMPLETE</span>
+            <span class="story-archive-season__toggle" id="toggle-s10">▾</span>
+          </div>
+        </div>
+        <div class="story-archive-season__body" id="archive-s10" style="display:none">
+          <div class="story-archive-chapters">
+            <div class="story-archive-chapter story-archive-chapter--done">
+              <span>📖 Ch.1: The Frozen Front</span>
+              <button class="btn btn--ghost btn--xs" onclick="event.stopPropagation(); replayChapter('s10-1')">↺ REPLAY</button>
+            </div>
+            <div class="story-archive-chapter story-archive-chapter--done">
+              <span>📖 Ch.2: Murmansk Convoy</span>
+              <button class="btn btn--ghost btn--xs" onclick="event.stopPropagation(); replayChapter('s10-2')">↺ REPLAY</button>
+            </div>
+            <div class="story-archive-chapter story-archive-chapter--locked">
+              <span>📖 Ch.3: The Ice Curtain — <span style="color:var(--text-muted)">Not completed</span></span>
+              <button class="btn btn--cyan btn--xs" onclick="event.stopPropagation(); startChapter('s10-3')">▶ PLAY</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+/* ── Story mode toggle ── */
+const STORY_MODE_DESCS = {
+  solo:        'Play through each chapter alone against AI opponents. Relaxed pace, full story focus.',
+  coop:        'Team up with 2–4 players against AI. Share strategy, divide objectives, win together.',
+  competitive: 'Up to 8 players compete through the same story. Only one side wins the campaign.'
+};
+
+function setStoryMode(btn, mode) {
+  document.querySelectorAll('.story-mode-toggle .tab-btn').forEach(b => b.classList.remove('tab-btn--active'));
+  btn.classList.add('tab-btn--active');
+  const desc = document.getElementById('storyModeDesc');
+  if (desc) desc.textContent = STORY_MODE_DESCS[mode] || '';
+}
+window.setStoryMode = setStoryMode;
+
+/* ── Chapter actions ── */
+function handleChapterClick(num, state) {
+  if (state === 'locked') {
+    showToast('Complete Chapter 2 to unlock Chapter 3', 'warning', '🔒');
+    return;
+  }
+  startChapter(num);
+}
+
+function startChapter(num) {
+  requireAuth(() => {
+    showToastFull('STARTING CHAPTER ' + num, 'Loading map and setting up your forces...', 'success', '📖', 4000);
+  });
+}
+
+function replayChapter(num) {
+  requireAuth(() => {
+    showToastFull('REPLAYING CHAPTER', 'Loading previous chapter...', 'info', '↺', 3000);
+  });
+}
+
+function joinStorySession(id) {
+  requireAuth(() => {
+    showToastFull('JOINING SESSION', 'Connecting to story session ' + id + '...', 'success', '⚔', 3000);
+  });
+}
+
+function watchStorySession(id) {
+  showToastFull('SPECTATING', 'Joining as observer...', 'info', '👁', 3000);
+}
+
+/* ── Archive accordion ── */
+function toggleArchive(id) {
+  const body   = document.getElementById('archive-' + id);
+  const toggle = document.getElementById('toggle-' + id);
+  if (!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display   = open ? 'none' : 'block';
+  if (toggle) toggle.textContent = open ? '▾' : '▴';
+}
+
+window.handleChapterClick  = handleChapterClick;
+window.startChapter        = startChapter;
+window.replayChapter       = replayChapter;
+window.joinStorySession    = joinStorySession;
+window.watchStorySession   = watchStorySession;
+window.toggleArchive       = toggleArchive;
+</script>

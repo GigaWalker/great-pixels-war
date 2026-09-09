@@ -1,0 +1,437 @@
+<!-- ============================================================
+     HOME.HTML — The Great Pixels War
+     Hero section, live stats, feature cards, season war
+     countdown banner, how to play, footer
+     ============================================================ -->
+
+<div class="home-page">
+
+  <!-- ════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════ -->
+  <section class="hero pixel-grid-bg" aria-label="Welcome to The Great Pixels War">
+
+    <div class="hero__content">
+
+      <!-- Title -->
+      <div class="hero__eyebrow">THE</div>
+      <h1 class="hero__title">
+        GREAT PIXELS <span class="hero__title-war">WAR</span>
+      </h1>
+      <p class="hero__subtitle">
+        Conquer the real world, one pixel at a time.<br>
+        Turn-based strategy on a living satellite map.
+      </p>
+
+      <!-- CTAs -->
+      <div class="hero__actions">
+        <button class="btn btn--green btn--xl" onclick="navigate('play')">
+          ▶ PLAY NOW
+        </button>
+        <button class="btn btn--yellow btn--xl" onclick="navigate('season-war')">
+          🌍 SEASON WAR
+        </button>
+        <button class="btn btn--ghost btn--xl" onclick="openModal('auth'); switchAuth('register')">
+          JOIN FREE
+        </button>
+      </div>
+
+      <!-- Live stats -->
+      <div class="stat-strip" role="region" aria-label="Live game statistics">
+        <div class="stat-item">
+          <span class="stat-item__num" id="stat-online">14,820</span>
+          <span class="stat-item__label">Players Online</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__num" id="stat-games">2,341</span>
+          <span class="stat-item__label">Active Games</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__num" id="stat-maps">98</span>
+          <span class="stat-item__label">Maps Available</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__num" id="stat-battles">1.2M</span>
+          <span class="stat-item__label">Battles Fought</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__num" id="stat-territories">847K</span>
+          <span class="stat-item__label">Territories Claimed</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Decorative pixel map SVG -->
+    <div class="hero__map-art" aria-hidden="true">
+      <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" class="hero-map-svg">
+        <!-- Grid -->
+        <defs>
+          <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(57,255,106,0.08)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="400" height="220" fill="url(#grid)"/>
+
+        <!-- Territory blocks (decorative) -->
+        <rect x="40"  y="40"  width="60" height="40" fill="rgba(57,255,106,0.15)"  stroke="rgba(57,255,106,0.4)"  stroke-width="1"/>
+        <rect x="100" y="20"  width="80" height="60" fill="rgba(255,58,58,0.15)"   stroke="rgba(255,58,58,0.4)"   stroke-width="1"/>
+        <rect x="180" y="40"  width="60" height="80" fill="rgba(245,200,66,0.15)"  stroke="rgba(245,200,66,0.4)"  stroke-width="1"/>
+        <rect x="240" y="20"  width="80" height="60" fill="rgba(0,229,255,0.12)"   stroke="rgba(0,229,255,0.35)"  stroke-width="1"/>
+        <rect x="320" y="40"  width="60" height="40" fill="rgba(57,255,106,0.12)"  stroke="rgba(57,255,106,0.35)" stroke-width="1"/>
+        <rect x="60"  y="80"  width="60" height="60" fill="rgba(255,58,58,0.12)"   stroke="rgba(255,58,58,0.35)"  stroke-width="1"/>
+        <rect x="120" y="80"  width="60" height="80" fill="rgba(57,255,106,0.12)"  stroke="rgba(57,255,106,0.3)"  stroke-width="1"/>
+        <rect x="200" y="120" width="80" height="60" fill="rgba(245,200,66,0.12)"  stroke="rgba(245,200,66,0.3)"  stroke-width="1"/>
+        <rect x="280" y="80"  width="60" height="80" fill="rgba(255,58,58,0.1)"    stroke="rgba(255,58,58,0.3)"   stroke-width="1"/>
+        <rect x="340" y="80"  width="40" height="60" fill="rgba(0,229,255,0.1)"    stroke="rgba(0,229,255,0.3)"   stroke-width="1"/>
+        <rect x="40"  y="140" width="80" height="60" fill="rgba(245,200,66,0.1)"   stroke="rgba(245,200,66,0.3)"  stroke-width="1"/>
+        <rect x="120" y="160" width="80" height="40" fill="rgba(57,255,106,0.1)"   stroke="rgba(57,255,106,0.25)" stroke-width="1"/>
+
+        <!-- City dots -->
+        <circle cx="70"  cy="60"  r="4" fill="#39ff6a" opacity="0.9"/>
+        <circle cx="140" cy="50"  r="4" fill="#ff3a3a" opacity="0.9"/>
+        <circle cx="210" cy="80"  r="4" fill="#f5c842" opacity="0.9"/>
+        <circle cx="280" cy="50"  r="4" fill="#00e5ff" opacity="0.9"/>
+        <circle cx="350" cy="60"  r="4" fill="#39ff6a" opacity="0.9"/>
+        <circle cx="90"  cy="110" r="3" fill="#ff3a3a" opacity="0.7"/>
+        <circle cx="150" cy="120" r="3" fill="#39ff6a" opacity="0.7"/>
+        <circle cx="240" cy="150" r="3" fill="#f5c842" opacity="0.7"/>
+        <circle cx="310" cy="120" r="3" fill="#ff3a3a" opacity="0.7"/>
+
+        <!-- Unit markers -->
+        <rect x="66"  y="56"  width="8" height="8" fill="#39ff6a" opacity="0.6"/>
+        <rect x="136" y="46"  width="8" height="8" fill="#ff3a3a" opacity="0.6"/>
+        <rect x="206" y="76"  width="8" height="8" fill="#f5c842" opacity="0.6"/>
+
+        <!-- Battle flash -->
+        <circle cx="155" cy="100" r="8" fill="none" stroke="#ff3a3a" stroke-width="1" opacity="0.5">
+          <animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Scan line effect -->
+        <rect width="400" height="2" fill="rgba(57,255,106,0.06)" y="0">
+          <animate attributeName="y" values="0;220;0" dur="4s" repeatCount="indefinite"/>
+        </rect>
+      </svg>
+    </div>
+
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       SEASON WAR BANNER
+  ════════════════════════════════════ -->
+  <section class="home-season-banner" aria-label="Season War announcement">
+    <div class="home-season-banner__inner">
+      <div class="home-season-banner__left">
+        <span class="home-season-banner__eyebrow">🔴 LIVE NOW</span>
+        <h2 class="home-season-banner__title">SEASON 12 WORLD WAR</h2>
+        <p class="home-season-banner__desc">
+          Operation Iron Tide — 200 million tiles. Real-world map.
+          City bidding open for <strong id="home-bid-countdown">2d 14h 32m</strong>.
+        </p>
+      </div>
+      <div class="home-season-banner__right">
+        <div class="home-season-timer">
+          <div class="home-season-timer__item">
+            <span class="home-season-timer__num" id="season-days">18</span>
+            <span class="home-season-timer__label">DAYS</span>
+          </div>
+          <div class="home-season-timer__sep">:</div>
+          <div class="home-season-timer__item">
+            <span class="home-season-timer__num" id="season-hours">07</span>
+            <span class="home-season-timer__label">HOURS</span>
+          </div>
+          <div class="home-season-timer__sep">:</div>
+          <div class="home-season-timer__item">
+            <span class="home-season-timer__num" id="season-mins">24</span>
+            <span class="home-season-timer__label">MINS</span>
+          </div>
+        </div>
+        <button class="btn btn--yellow-solid btn--lg" onclick="navigate('season-war')">
+          JOIN SEASON WAR ▶
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       GAME MODES OVERVIEW
+  ════════════════════════════════════ -->
+  <section class="home-section" aria-label="Game modes">
+    <div class="section-title">GAME MODES</div>
+    <div class="home-modes-grid">
+
+      <div class="mode-card mode-card--yellow" onclick="navigate('season-war')" role="button" tabindex="0">
+        <span class="mode-card__badge">LIVE</span>
+        <span class="mode-card__icon">🌍</span>
+        <div class="mode-card__title">SEASON WAR</div>
+        <div class="mode-card__desc">One massive 200M-tile real-world war each season. Bid on cities, form alliances, dominate the globe.</div>
+        <div class="mode-card__meta">
+          <span class="mode-card__meta-item">⏱ 3 months</span>
+          <span class="mode-card__meta-item">👥 Unlimited</span>
+          <span class="mode-card__meta-item">🗺 Global</span>
+        </div>
+      </div>
+
+      <div class="mode-card mode-card--cyan" onclick="navigate('story')" role="button" tabindex="0">
+        <span class="mode-card__icon">📖</span>
+        <div class="mode-card__title">STORY MODE</div>
+        <div class="mode-card__desc">3 narrative campaigns per season. Play solo or co-op through a real-world-inspired conflict arc.</div>
+        <div class="mode-card__meta">
+          <span class="mode-card__meta-item">⏱ 1–3 hours</span>
+          <span class="mode-card__meta-item">👥 1–8</span>
+          <span class="mode-card__meta-item">🗺 Regional</span>
+        </div>
+      </div>
+
+      <div class="mode-card mode-card--green" onclick="navigate('lobby')" role="button" tabindex="0">
+        <span class="mode-card__icon">⚡</span>
+        <div class="mode-card__title">QUICK MATCH</div>
+        <div class="mode-card__desc">Jump in immediately. Server-matched, auto-balanced, 25–40 minute default games on appropriate maps.</div>
+        <div class="mode-card__meta">
+          <span class="mode-card__meta-item">⏱ 25–40 min</span>
+          <span class="mode-card__meta-item">👥 2–16</span>
+          <span class="mode-card__meta-item">🗺 Any</span>
+        </div>
+      </div>
+
+      <div class="mode-card mode-card--green" onclick="navigate('lobby')" role="button" tabindex="0">
+        <span class="mode-card__icon">🎛</span>
+        <div class="mode-card__title">CUSTOM GAME</div>
+        <div class="mode-card__desc">Host your own game. Full control over map, turn timer, players, bots, fog of war, and win conditions.</div>
+        <div class="mode-card__meta">
+          <span class="mode-card__meta-item">⏱ Custom</span>
+          <span class="mode-card__meta-item">👥 2–50</span>
+          <span class="mode-card__meta-item">🗺 Any tier</span>
+        </div>
+      </div>
+
+      <div class="mode-card mode-card--red" onclick="navigate('lobby')" role="button" tabindex="0">
+        <span class="mode-card__icon">🔒</span>
+        <div class="mode-card__title">PRIVATE GAME</div>
+        <div class="mode-card__desc">Invite-only or password-protected. Perfect for clan wars, tournaments, or friend groups.</div>
+        <div class="mode-card__meta">
+          <span class="mode-card__meta-item">⏱ Custom</span>
+          <span class="mode-card__meta-item">👥 2–50</span>
+          <span class="mode-card__meta-item">🔒 Invite only</span>
+        </div>
+      </div>
+
+      <div class="mode-card mode-card--diamond" onclick="navigate('lobby')" role="button" tabindex="0">
+        <span class="mode-card__icon">🤖</span>
+        <div class="mode-card__title">SANDBOX</div>
+        <div class="mode-card__desc">Test strategies against bots. Fully configurable difficulty, map, starting resources, and unit set.</div>
+        <div class="mode-card__meta">
+          <span class="mode-card__meta-item">⏱ Custom</span>
+          <span class="mode-card__meta-item">👥 Solo</span>
+          <span class="mode-card__meta-item">🤖 Bots</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       FEATURES
+  ════════════════════════════════════ -->
+  <section class="home-section" aria-label="Game features">
+    <div class="section-title">FEATURES</div>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <span class="feature-card__icon">🌍</span>
+        <div class="feature-card__title">REAL WORLD MAPS</div>
+        <div class="feature-card__desc">Satellite-accurate maps zoomable down to 1 km. Every city, river, coastline, and border matters strategically.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__icon">⚔</span>
+        <div class="feature-card__title">TURN-BASED STRATEGY</div>
+        <div class="feature-card__desc">Plan every move. Deploy infantry, tanks, ships, and aircraft. Fortify positions. Outmaneuver up to 50 opponents.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__icon">🗺</span>
+        <div class="feature-card__title">MAP EDITOR</div>
+        <div class="feature-card__desc">Build custom maps from scratch — fantasy worlds, historical battles, or your own city block. Publish to the community.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__icon">🤝</span>
+        <div class="feature-card__title">ALLIANCES & DIPLOMACY</div>
+        <div class="feature-card__desc">Form alliances, declare war, negotiate peace, trade resources. Backstab at the perfect moment.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__icon">🏆</span>
+        <div class="feature-card__title">RANKED SEASONS</div>
+        <div class="feature-card__desc">Climb the global leaderboard each season. Earn Diamonds, Gold, medals, and exclusive cosmetics based on rank.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__icon">🎨</span>
+        <div class="feature-card__title">PIXEL ART STYLE</div>
+        <div class="feature-card__desc">Chunky crisp pixel art for every unit, building, and map theme. The world wars have never looked this good.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__icon">🤖</span>
+        <div class="feature-card__title">BOT DEFENCE</div>
+        <div class="feature-card__desc">Step away from Season War? Your bot holds the line. Set standing orders or resume control any time.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-card__icon">🌙</span>
+        <div class="feature-card__title">DAY & NIGHT CYCLE</div>
+        <div class="feature-card__desc">The Season War map reflects real-world day and night, adding atmosphere and visual depth to your campaign.</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       MAP TIERS
+  ════════════════════════════════════ -->
+  <section class="home-section" aria-label="Map tiers">
+    <div class="section-title">MAP TIERS</div>
+    <div class="home-tier-grid">
+
+      <div class="home-tier-card">
+        <div class="home-tier-card__num">I</div>
+        <div class="home-tier-card__name">THEATER</div>
+        <div class="home-tier-card__range">99 – 9,999 tiles</div>
+        <div class="home-tier-card__desc">Neighborhood to city district. Fast, intense, 2–4 player clashes.</div>
+        <div class="home-tier-card__players">👥 2–4 players</div>
+      </div>
+
+      <div class="home-tier-card">
+        <div class="home-tier-card__num">II</div>
+        <div class="home-tier-card__name">REGIONAL</div>
+        <div class="home-tier-card__range">10K – 999K tiles</div>
+        <div class="home-tier-card__desc">City to small country scale. Story mode campaigns and custom battles.</div>
+        <div class="home-tier-card__players">👥 2–12 players</div>
+      </div>
+
+      <div class="home-tier-card">
+        <div class="home-tier-card__num">III</div>
+        <div class="home-tier-card__name">CONTINENTAL</div>
+        <div class="home-tier-card__range">1M – 99M tiles</div>
+        <div class="home-tier-card__desc">Country to continent scale. Long campaigns with deep strategic play.</div>
+        <div class="home-tier-card__players">👥 2–50 players</div>
+      </div>
+
+      <div class="home-tier-card home-tier-card--featured">
+        <div class="home-tier-card__num">IV</div>
+        <div class="home-tier-card__name">GLOBAL</div>
+        <div class="home-tier-card__range">100M+ tiles</div>
+        <div class="home-tier-card__desc">Full planet. The Season War stage. Everyone fights for everything.</div>
+        <div class="home-tier-card__players">👥 Unlimited</div>
+        <div class="home-tier-card__badge">SEASON WAR</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       HOW TO PLAY
+  ════════════════════════════════════ -->
+  <section class="home-section" aria-label="How to play">
+    <div class="section-title">HOW TO PLAY</div>
+    <div class="home-steps">
+
+      <div class="home-step">
+        <div class="home-step__num">01</div>
+        <div class="home-step__title">CREATE OR JOIN</div>
+        <div class="home-step__desc">Open the lobby, pick a waiting game or host your own. Choose map tier, turn timer, bots, and win conditions.</div>
+      </div>
+
+      <div class="home-step__arrow">→</div>
+
+      <div class="home-step">
+        <div class="home-step__num">02</div>
+        <div class="home-step__title">DEPLOY YOUR ARMY</div>
+        <div class="home-step__desc">Spend starting Gold on infantry, tanks, ships, or aircraft. Position units on your starting city and surrounding tiles.</div>
+      </div>
+
+      <div class="home-step__arrow">→</div>
+
+      <div class="home-step">
+        <div class="home-step__num">03</div>
+        <div class="home-step__title">CONQUER TERRITORY</div>
+        <div class="home-step__desc">Move units across the map each turn. Capture cities to earn Bronze, Silver, and Gold income. Surround enemies to wipe them out.</div>
+      </div>
+
+      <div class="home-step__arrow">→</div>
+
+      <div class="home-step">
+        <div class="home-step__num">04</div>
+        <div class="home-step__title">WIN THE WAR</div>
+        <div class="home-step__desc">Eliminate all opponents or reach the territory target. Earn XP, season rank, and currency rewards. Climb the leaderboard.</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       CURRENCY & COSMETICS TEASER
+  ════════════════════════════════════ -->
+  <section class="home-section" aria-label="Currencies and cosmetics">
+    <div class="section-title">EARN & SPEND</div>
+    <div class="home-currency-grid">
+
+      <div class="home-currency-card">
+        <span class="home-currency-card__icon">🥉</span>
+        <div class="home-currency-card__name" style="color:var(--bronze)">BRONZE</div>
+        <div class="home-currency-card__desc">Earned every game. Buys <span style="color:var(--tier-common)">Common</span> tier cosmetics.</div>
+      </div>
+
+      <div class="home-currency-card">
+        <span class="home-currency-card__icon">🥈</span>
+        <div class="home-currency-card__name" style="color:var(--silver)">SILVER</div>
+        <div class="home-currency-card__desc">Earned from wins. Buys <span style="color:var(--tier-veteran)">Veteran</span> tier cosmetics.</div>
+      </div>
+
+      <div class="home-currency-card">
+        <span class="home-currency-card__icon">🥇</span>
+        <div class="home-currency-card__name" style="color:var(--gold)">GOLD</div>
+        <div class="home-currency-card__desc">Earned from ranked play. Buys <span style="color:var(--tier-elite)">Elite</span> cosmetics and city bids.</div>
+      </div>
+
+      <div class="home-currency-card home-currency-card--premium">
+        <span class="home-currency-card__icon">💎</span>
+        <div class="home-currency-card__name" style="color:var(--diamond)">DIAMONDS</div>
+        <div class="home-currency-card__desc">Real-money or season rewards. Buys <span style="color:var(--tier-command)">Command</span> tier exclusives and VIP.</div>
+      </div>
+
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <button class="btn btn--diamond btn--lg" onclick="navigate('shop')">
+        💎 VISIT SHOP
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════ -->
+  <footer>
+    <div class="footer-logo">THE GREAT PIXELS WAR</div>
+    <ul class="footer-links">
+      <li><a href="#" onclick="navigate('about');return false">About</a></li>
+      <li><a href="#" onclick="return false">Discord</a></li>
+      <li><a href="#" onclick="return false">GitHub</a></li>
+      <li><a href="#" onclick="return false">Privacy</a></li>
+      <li><a href="#" onclick="return false">Terms</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 The Great Pixels War. All rights reserved.</div>
+  </footer>
+
+</div>

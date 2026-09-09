@@ -1,0 +1,226 @@
+<!-- ============================================================
+     LOBBY.HTML — The Great Pixels War
+     Sidebar: player card, wallet, online players, chat panel
+     Main: toolbar with filters/search, game table, pagination
+     ============================================================ -->
+
+<div class="lobby-page">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="lobby-sidebar" aria-label="Player info and chat">
+
+    <!-- Player card -->
+    <div class="lobby-panel px-panel" id="lobbyPlayerCard">
+      <div class="panel-title">MY PROFILE</div>
+      <div class="player-card">
+        <div class="player-card__avatar" id="lobbyAvatar">🪖</div>
+        <div class="player-card__info">
+          <div class="player-card__name" id="lobbyUsername">GHOST_RECON</div>
+          <div class="player-card__rank" id="lobbyRank">⭐ Sergeant II</div>
+          <div class="player-card__title" id="lobbyTitle">Iron Veteran</div>
+          <div class="xp-bar-wrap">
+            <div class="xp-bar" id="lobbyXpBar" style="width:64%"></div>
+          </div>
+          <div class="xp-bar-label">
+            <span id="lobbyXp">3,820</span>
+            <span id="lobbyXpNext">6,000 XP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wallet -->
+      <div class="wallet" id="lobbyWallet">
+        <div class="wallet-item wallet-item--diamond">
+          <span class="wallet-item__icon">💎</span>
+          <div class="wallet-item__info">
+            <span class="wallet-item__amount cur-diamond" id="lobbyDiamonds">1,240</span>
+            <span class="wallet-item__label">Diamonds</span>
+          </div>
+        </div>
+        <div class="wallet-item wallet-item--gold">
+          <span class="wallet-item__icon">🥇</span>
+          <div class="wallet-item__info">
+            <span class="wallet-item__amount cur-gold" id="lobbyGold">8,400</span>
+            <span class="wallet-item__label">Gold</span>
+          </div>
+        </div>
+        <div class="wallet-item wallet-item--silver">
+          <span class="wallet-item__icon">🥈</span>
+          <div class="wallet-item__info">
+            <span class="wallet-item__amount cur-silver" id="lobbySilver">22,100</span>
+            <span class="wallet-item__label">Silver</span>
+          </div>
+        </div>
+        <div class="wallet-item wallet-item--bronze">
+          <span class="wallet-item__icon">🥉</span>
+          <div class="wallet-item__info">
+            <span class="wallet-item__amount cur-bronze" id="lobbyBronze">105,300</span>
+            <span class="wallet-item__label">Bronze</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mini stats -->
+      <div class="mini-stats" id="lobbyMiniStats">
+        <div class="mini-stat">
+          <span class="mini-stat__value">148</span>
+          <span class="mini-stat__key">Wins</span>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-stat__value">62</span>
+          <span class="mini-stat__key">Losses</span>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-stat__value">70%</span>
+          <span class="mini-stat__key">Win Rate</span>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-stat__value">Sgt II</span>
+          <span class="mini-stat__key">Rank</span>
+        </div>
+      </div>
+
+      <!-- Profile / Alliance buttons -->
+      <div style="display:flex;gap:var(--space-2);margin-top:var(--space-3)">
+        <button class="btn btn--ghost btn--xs" style="flex:1"
+          onclick="navigate('profile')" aria-label="View profile">
+          👤 PROFILE
+        </button>
+        <button class="btn btn--cyan btn--xs" style="flex:1"
+          onclick="openAllianceModal(null)" aria-label="View alliance">
+          🤝 ALLIANCE
+        </button>
+      </div>
+    </div>
+
+    <!-- Online Players -->
+    <div class="lobby-panel px-panel">
+      <div class="panel-title" id="lobbyOnlineCount">ONLINE — 14,820</div>
+      <div class="online-list" id="lobbyOnlineList" role="list" aria-label="Online players">
+        <!-- Populated by lobby.js -->
+      </div>
+    </div>
+
+    <!-- Chat panel -->
+    <div class="lobby-chat-panel px-panel">
+      <div class="lobby-chat-panel__header">
+        <div class="lobby-chat-tabs">
+          <button class="lobby-chat-tab active" onclick="switchLobbyChat(this,'world')">🌍 WORLD</button>
+          <button class="lobby-chat-tab" onclick="switchLobbyChat(this,'alliance')">🤝 ALLY</button>
+        </div>
+        <button class="btn-icon btn-icon--xs" onclick="toggleChatOverlay()" title="Open full chat" aria-label="Open full chat">↗</button>
+      </div>
+      <div class="lobby-chat-messages" id="lobbyChatMessages" role="log" aria-live="polite">
+        <!-- Populated by chat.js / lobby.js -->
+      </div>
+      <div class="chat-input-wrap">
+        <input
+          class="chat-input"
+          id="lobbyChatInput"
+          type="text"
+          placeholder="Press Enter to chat..."
+          maxlength="200"
+          aria-label="Chat message"
+          onkeydown="handleLobbyChatKey(event)"
+        >
+        <button class="chat-send-btn" onclick="sendLobbyChatMessage()" aria-label="Send">SEND</button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── MAIN GAME LIST ── -->
+  <main class="lobby-main" aria-label="Game browser">
+
+    <!-- Toolbar -->
+    <div class="lobby-toolbar">
+
+      <!-- Mode filter tabs -->
+      <div class="tab-group" role="tablist" aria-label="Filter games by mode">
+        <button class="tab-btn tab-btn--active" onclick="setLobbyTab(this,'all')"    role="tab">ALL</button>
+        <button class="tab-btn" onclick="setLobbyTab(this,'season')"                  role="tab">SEASON WAR</button>
+        <button class="tab-btn" onclick="setLobbyTab(this,'story')"                   role="tab">STORY</button>
+        <button class="tab-btn" onclick="setLobbyTab(this,'quick')"                   role="tab">QUICK</button>
+        <button class="tab-btn" onclick="setLobbyTab(this,'custom')"                  role="tab">CUSTOM</button>
+        <button class="tab-btn" onclick="setLobbyTab(this,'private')"                 role="tab">PRIVATE</button>
+        <button class="tab-btn" onclick="setLobbyTab(this,'sandbox')"                 role="tab">SANDBOX</button>
+      </div>
+
+      <!-- Status filter -->
+      <div class="filter-group" role="group" aria-label="Filter by status">
+        <button class="filter-btn filter-btn--active" onclick="setStatusFilter(this,'all')">ALL</button>
+        <button class="filter-btn" onclick="setStatusFilter(this,'waiting')">WAITING</button>
+        <button class="filter-btn" onclick="setStatusFilter(this,'live')">LIVE</button>
+      </div>
+
+      <!-- Map tier filter -->
+      <div class="filter-group" role="group" aria-label="Filter by map tier">
+        <button class="filter-btn filter-btn--active" onclick="setTierFilter(this,'all')">ALL TIERS</button>
+        <button class="filter-btn" onclick="setTierFilter(this,'1')">I THEATER</button>
+        <button class="filter-btn" onclick="setTierFilter(this,'2')">II REGIONAL</button>
+        <button class="filter-btn" onclick="setTierFilter(this,'3')">III CONTINENTAL</button>
+        <button class="filter-btn" onclick="setTierFilter(this,'4')">IV GLOBAL</button>
+      </div>
+
+    </div>
+
+    <!-- Search + actions row -->
+    <div class="lobby-actions-row">
+      <div class="search-wrap" style="flex:1;max-width:360px">
+        <input
+          class="search-input"
+          id="lobbySearch"
+          type="text"
+          placeholder="Search games..."
+          oninput="handleLobbySearch(this.value)"
+          aria-label="Search games"
+        >
+      </div>
+      <button class="btn btn--green" onclick="requireAuth(() => openModal('create-game'))" aria-label="Create a new game">
+        + CREATE GAME
+      </button>
+      <button class="btn btn--blue" onclick="handleQuickMatch()" aria-label="Quick match">
+        ⚡ QUICK MATCH
+      </button>
+    </div>
+
+    <!-- Game Table -->
+    <div class="game-table px-panel" id="lobbyGameTable" aria-label="Available games">
+
+      <!-- Table head -->
+      <div class="game-table__head" role="row">
+        <div class="game-table__th" role="columnheader">
+          <button class="btn-sort btn-sort--asc" onclick="sortGames('name')">GAME NAME</button>
+        </div>
+        <div class="game-table__th" role="columnheader">MODE</div>
+        <div class="game-table__th" role="columnheader">MAP</div>
+        <div class="game-table__th" role="columnheader">
+          <button class="btn-sort" onclick="sortGames('players')">PLAYERS</button>
+        </div>
+        <div class="game-table__th" role="columnheader">TURN</div>
+        <div class="game-table__th" role="columnheader">STATUS</div>
+        <div class="game-table__th" role="columnheader"></div>
+      </div>
+
+      <!-- Rows populated by lobby.js -->
+      <div id="lobbyGameRows" role="rowgroup">
+        <!-- Loading state -->
+        <div class="lobby-table-loading" id="lobbyTableLoading">
+          <div class="skeleton" style="height:60px;margin-bottom:1px"></div>
+          <div class="skeleton" style="height:60px;margin-bottom:1px"></div>
+          <div class="skeleton" style="height:60px;margin-bottom:1px"></div>
+          <div class="skeleton" style="height:60px;margin-bottom:1px"></div>
+          <div class="skeleton" style="height:60px"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="lobbyPagination" aria-label="Pagination">
+      <!-- Populated by lobby.js -->
+    </div>
+
+  </main>
+
+</div>

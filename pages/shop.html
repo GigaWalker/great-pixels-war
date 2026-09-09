@@ -1,0 +1,78 @@
+<!-- ============================================================
+     SHOP.HTML — The Great Pixels War
+     7-tab shop: Diamonds, VIP, Units, Buildings, Profile,
+     Maps, Bundles — currency reminder banner, item cards
+     ============================================================ -->
+
+<div class="shop-page">
+
+  <!-- ── Shop Header ── -->
+  <div class="shop-header">
+    <div class="shop-header__left">
+      <h1 class="shop-header__title">SHOP</h1>
+      <p class="shop-header__sub">Earn currencies in-game or buy Diamonds to unlock exclusive items</p>
+    </div>
+    <!-- Currency wallet strip -->
+    <div class="shop-wallet" id="shopWallet">
+      <div class="shop-wallet__item">
+        <span>💎</span>
+        <span class="cur-diamond" id="shopDiamonds">1,240</span>
+      </div>
+      <div class="shop-wallet__item">
+        <span>🥇</span>
+        <span class="cur-gold" id="shopGold">8,400</span>
+      </div>
+      <div class="shop-wallet__item">
+        <span>🥈</span>
+        <span class="cur-silver" id="shopSilver">22,100</span>
+      </div>
+      <div class="shop-wallet__item">
+        <span>🥉</span>
+        <span class="cur-bronze" id="shopBronze">105,300</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Currency reminder ── -->
+  <div class="shop-currency-bar">
+    <div class="shop-currency-bar__inner">
+      <span class="shop-currency-item"><span style="color:var(--bronze)">🥉 Bronze</span> → <span style="color:var(--tier-common)">Common</span> cosmetics</span>
+      <span class="shop-currency-sep">·</span>
+      <span class="shop-currency-item"><span style="color:var(--silver)">🥈 Silver</span> → <span style="color:var(--tier-veteran)">Veteran</span> cosmetics</span>
+      <span class="shop-currency-sep">·</span>
+      <span class="shop-currency-item"><span style="color:var(--gold)">🥇 Gold</span> → <span style="color:var(--tier-elite)">Elite</span> cosmetics</span>
+      <span class="shop-currency-sep">·</span>
+      <span class="shop-currency-item"><span style="color:var(--diamond)">💎 Diamonds</span> → <span style="color:var(--tier-command)">Command</span> + VIP</span>
+    </div>
+  </div>
+
+  <!-- ── Tab Navigation ── -->
+  <div class="shop-tabs">
+    <div class="tab-group tab-group--underline tab-group--diamond" id="shopTabGroup">
+      <button class="tab-btn tab-btn--active" onclick="setShopTab(this,'diamonds')" id="shopTab-diamonds">💎 DIAMONDS</button>
+      <button class="tab-btn" onclick="setShopTab(this,'vip')"      id="shopTab-vip">👑 VIP</button>
+      <button class="tab-btn" onclick="setShopTab(this,'units')"    id="shopTab-units">🪖 UNITS</button>
+      <button class="tab-btn" onclick="setShopTab(this,'buildings')" id="shopTab-buildings">🏗 BUILDINGS</button>
+      <button class="tab-btn" onclick="setShopTab(this,'profile')"  id="shopTab-profile">👤 PROFILE</button>
+      <button class="tab-btn" onclick="setShopTab(this,'maps')"     id="shopTab-maps">🗺 MAP THEMES</button>
+      <button class="tab-btn" onclick="setShopTab(this,'bundles')"  id="shopTab-bundles">📦 BUNDLES</button>
+    </div>
+  </div>
+
+  <!-- ── Tab Panels ── -->
+  <div class="shop-content" id="shopContent">
+    <!-- Populated dynamically by shop.js -->
+    <div class="shop-loading">
+      <div class="skeleton" style="height:200px;margin-bottom:1rem"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem">
+        <div class="skeleton" style="height:220px"></div>
+        <div class="skeleton" style="height:220px"></div>
+        <div class="skeleton" style="height:220px"></div>
+        <div class="skeleton" style="height:220px"></div>
+        <div class="skeleton" style="height:220px"></div>
+        <div class="skeleton" style="height:220px"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
