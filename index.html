@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Great Pixels War — Conquer the real world, one pixel at a time. Turn-based strategy on a living map.">
+  <meta name="theme-color" content="#0a0c10">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Great Pixels War">
+  <meta property="og:description" content="Conquer the real world, one pixel at a time. Turn-based strategy on a living map.">
+  <meta property="og:type" content="website">
+
+  <title>The Great Pixels War</title>
+
+  <!-- ── FONTS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+  <!-- ── FOUNDATION CSS (load order matters) ── -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/buttons.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/panels.css">
+  <link rel="stylesheet" href="css/toast.css">
+  <link rel="stylesheet" href="css/modals.css">
+
+  <!-- ── COMPONENT CSS ── -->
+  <link rel="stylesheet" href="css/navbar.css">
+
+  <!-- ── PAGE CSS ── -->
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/play.css">
+  <link rel="stylesheet" href="css/lobby.css">
+  <link rel="stylesheet" href="css/season-war.css">
+  <link rel="stylesheet" href="css/story.css">
+  <link rel="stylesheet" href="css/leaderboard.css">
+  <link rel="stylesheet" href="css/shop.css">
+  <link rel="stylesheet" href="css/profile.css">
+  <link rel="stylesheet" href="css/about.css">
+
+  <!-- ── FAVICON placeholder ── -->
+  <link rel="icon" href="assets/icons/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════
+       SYSTEM ANNOUNCEMENT BANNER
+       Shown for major events (season start, downtime)
+       Toggled via JS: body.classList.add('has-banner')
+  ════════════════════════════════════════════════ -->
+  <div class="system-banner system-banner--season" id="systemBanner" style="display:none">
+    <span>⚔ SEASON 12 WORLD WAR IS LIVE — City bidding ends in <strong id="bannerCountdown">2d 14h 32m</strong></span>
+    <button class="system-banner__close" onclick="closeBanner()" aria-label="Close banner">✕</button>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       NAVBAR
+       Loaded as a component via navbar.js
+       Falls back to inline if JS fails
+  ════════════════════════════════════════════════ -->
+  <div id="navbar-mount"></div>
+
+
+  <!-- ════════════════════════════════════════════════
+       MOBILE MENU DRAWER
+       Toggled by hamburger button in navbar
+  ════════════════════════════════════════════════ -->
+  <nav class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+    <a class="mobile-menu__item active" data-page="home" onclick="navigate('home')">
+      <span class="mobile-menu__icon">🏠</span> HOME
+    </a>
+    <a class="mobile-menu__item" data-page="play" onclick="navigate('play')">
+      <span class="mobile-menu__icon">▶</span> PLAY
+    </a>
+    <a class="mobile-menu__item" data-page="season-war" onclick="navigate('season-war')">
+      <span class="mobile-menu__icon">🌍</span> SEASON WAR
+    </a>
+    <a class="mobile-menu__item" data-page="story" onclick="navigate('story')">
+      <span class="mobile-menu__icon">📖</span> STORY
+    </a>
+    <a class="mobile-menu__item" data-page="leaderboard" onclick="navigate('leaderboard')">
+      <span class="mobile-menu__icon">🏆</span> LEADERBOARD
+    </a>
+    <a class="mobile-menu__item" data-page="shop" onclick="navigate('shop')">
+      <span class="mobile-menu__icon">🛒</span> SHOP
+    </a>
+    <a class="mobile-menu__item" data-page="about" onclick="navigate('about')">
+      <span class="mobile-menu__icon">ℹ</span> ABOUT
+    </a>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════
+       MAIN APP WRAPPER
+       All pages live inside here
+  ════════════════════════════════════════════════ -->
+  <main id="app" class="page-wrapper" role="main">
+
+    <!-- ── BACK BAR (shown on all non-home pages) ── -->
+    <div class="back-bar" id="backBar" style="display:none" aria-label="Navigation breadcrumb">
+      <button class="back-btn" id="backBtn" onclick="goBack()" aria-label="Go back">BACK</button>
+      <nav class="breadcrumb" id="breadcrumb" aria-label="breadcrumb">
+        <span>HOME</span>
+      </nav>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: HOME
+    ──────────────────────────────────────── -->
+    <div id="page-home" class="page" role="region" aria-label="Home page">
+      <!-- Loaded by router.js from pages/home.html -->
+      <div class="page-loader" data-src="pages/home.html"></div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: PLAY (Mode Selector)
+    ──────────────────────────────────────── -->
+    <div id="page-play" class="page" role="region" aria-label="Play mode selector" style="display:none">
+      <div class="page-loader" data-src="pages/play.html"></div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: LOBBY
+    ──────────────────────────────────────── -->
+    <div id="page-lobby" class="page" role="region" aria-label="Game lobby" style="display:none">
+      <div class="page-loader" data-src="pages/lobby.html"></div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: SEASON WAR
+    ──────────────────────────────────────── -->
+    <div id="page-season-war" class="page" role="region" aria-label="Season War" style="display:none">
+      <div class="page-loader" data-src="pages/season-war.html"></div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: STORY
+    ──────────────────────────────────────── -->
+    <div id="page-story" class="page" role="region" aria-label="Story mode" style="display:none">
+      <div class="page-loader" data-src="pages/story.html"></div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: LEADERBOARD
+    ──────────────────────────────────────── -->
+    <div id="page-leaderboard" class="page" role="region" aria-label="Leaderboard" style="display:none">
+      <div class="page-loader" data-src="pages/leaderboard.html"></div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: SHOP
+    ──────────────────────────────────────── -->
+    <div id="page-shop" class="page" role="region" aria-label="Shop" style="display:none">
+      <div class="page-loader" data-src="pages/shop.html"></div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: PROFILE
+    ──────────────────────────────────────── -->
+    <div id="page-profile" class="page" role="region" aria-label="Player profile" style="display:none">
+      <div class="page-loader" data-src="pages/profile.html"></div>
+    </div>
+
+    <!-- ────────────────────────────────────────
+         PAGE: ABOUT
+    ──────────────────────────────────────── -->
+    <div id="page-about" class="page" role="region" aria-label="About" style="display:none">
+      <div class="page-loader" data-src="pages/about.html"></div>
+    </div>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════════════
+       MODAL: AUTH (Login / Register)
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-auth" role="dialog" aria-modal="true" aria-label="Login or Register" onclick="handleOverlayClick(event, 'auth')">
+    <div class="modal modal--sm" id="modal-auth-box">
+      <div class="modal__header">
+        <span class="modal__title">🪖 ENTER THE WAR</span>
+        <button class="btn-close" onclick="closeModal('auth')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body" id="modal-auth-body">
+        <!-- Loaded by auth.js -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       MODAL: CREATE GAME
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-create-game" role="dialog" aria-modal="true" aria-label="Create a new game" onclick="handleOverlayClick(event, 'create-game')">
+    <div class="modal" id="modal-create-game-box">
+      <div class="modal__header">
+        <span class="modal__title">⚔ CREATE NEW GAME</span>
+        <button class="btn-close" onclick="closeModal('create-game')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body" id="modal-create-game-body">
+        <!-- Loaded by create-game.js -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       MODAL: SETTINGS
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-settings" role="dialog" aria-modal="true" aria-label="Settings" onclick="handleOverlayClick(event, 'settings')">
+    <div class="modal modal--lg" id="modal-settings-box">
+      <div class="modal__header">
+        <span class="modal__title">⚙ SETTINGS</span>
+        <button class="btn-close" onclick="closeModal('settings')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body modal__body--no-pad" id="modal-settings-body">
+        <!-- Loaded by settings.js -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       MODAL: ITEM PREVIEW
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-item-preview" role="dialog" aria-modal="true" aria-label="Item preview" onclick="handleOverlayClick(event, 'item-preview')">
+    <div class="modal modal--sm" id="modal-item-preview-box">
+      <div class="modal__header">
+        <span class="modal__title" id="item-preview-title">ITEM PREVIEW</span>
+        <button class="btn-close" onclick="closeModal('item-preview')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body modal__body--no-pad" id="modal-item-preview-body">
+        <!-- Populated dynamically by shop.js -->
+      </div>
+      <div class="modal__footer" id="modal-item-preview-footer">
+        <button class="btn btn--ghost" onclick="closeModal('item-preview')">CLOSE</button>
+        <button class="btn btn--green" id="item-preview-buy-btn">BUY</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       MODAL: CONFIRM PURCHASE
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-confirm-purchase" role="dialog" aria-modal="true" aria-label="Confirm purchase" onclick="handleOverlayClick(event, 'confirm-purchase')">
+    <div class="modal modal--sm" id="modal-confirm-purchase-box">
+      <div class="modal__header">
+        <span class="modal__title">💳 CONFIRM PURCHASE</span>
+        <button class="btn-close" onclick="closeModal('confirm-purchase')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body" id="modal-confirm-purchase-body">
+        <!-- Populated dynamically by shop.js -->
+      </div>
+      <div class="modal__footer modal__footer--between">
+        <button class="btn btn--ghost" onclick="closeModal('confirm-purchase')">CANCEL</button>
+        <button class="btn btn--green" id="confirm-purchase-btn" onclick="completePurchase()">CONFIRM ▶</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       MODAL: PLACE BID (Season War)
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-bid" role="dialog" aria-modal="true" aria-label="Place a city bid" onclick="handleOverlayClick(event, 'bid')">
+    <div class="modal modal--sm modal--yellow" id="modal-bid-box">
+      <div class="modal__header">
+        <span class="modal__title">🏙 PLACE BID</span>
+        <button class="btn-close" onclick="closeModal('bid')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body" id="modal-bid-body">
+        <!-- Populated dynamically by season-war.js -->
+      </div>
+      <div class="modal__footer modal__footer--between">
+        <button class="btn btn--ghost" onclick="closeModal('bid')">CANCEL</button>
+        <button class="btn btn--yellow-solid" onclick="submitBid()">PLACE BID ▶</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       MODAL: MINI PROFILE
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-mini-profile" role="dialog" aria-modal="true" aria-label="Player profile" onclick="handleOverlayClick(event, 'mini-profile')">
+    <div class="modal modal--sm" id="modal-mini-profile-box">
+      <div class="modal__header">
+        <span class="modal__title" id="mini-profile-title">PLAYER</span>
+        <button class="btn-close" onclick="closeModal('mini-profile')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body modal__body--no-pad" id="modal-mini-profile-body">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       MODAL: ALLIANCE
+  ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-alliance" role="dialog" aria-modal="true" aria-label="Alliance panel" onclick="handleOverlayClick(event, 'alliance')">
+    <div class="modal modal--lg alliance-modal" id="modal-alliance-box">
+      <div class="modal__header">
+        <span class="modal__title" id="alliance-modal-title">🤝 ALLIANCE</span>
+        <button class="btn-close" onclick="closeModal('alliance')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body modal__body--no-pad" id="modal-alliance-body">
+        <!-- Populated dynamically by lobby.js / profile.js -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       NOTIFICATIONS PANEL (right drawer)
+  ════════════════════════════════════════════════ -->
+  <aside class="notif-panel" id="notifPanel" role="complementary" aria-label="Notifications">
+    <div class="notif-panel__header">
+      <span class="notif-panel__title">🔔 NOTIFICATIONS</span>
+      <div class="notif-panel__actions">
+        <button class="notif-panel__mark-all" onclick="markAllRead()">MARK ALL READ</button>
+        <button class="btn-close" onclick="closeNotifPanel()" aria-label="Close notifications">✕</button>
+      </div>
+    </div>
+    <div class="notif-panel__tabs">
+      <button class="notif-panel__tab active" onclick="switchNotifTab(this, 'all')">ALL</button>
+      <button class="notif-panel__tab" onclick="switchNotifTab(this, 'game')">GAME</button>
+      <button class="notif-panel__tab" onclick="switchNotifTab(this, 'season')">SEASON</button>
+      <button class="notif-panel__tab" onclick="switchNotifTab(this, 'alliance')">ALLIANCE</button>
+    </div>
+    <div class="notif-panel__list" id="notifList">
+      <!-- Populated by navbar.js -->
+    </div>
+  </aside>
+
+
+  <!-- ════════════════════════════════════════════════
+       WORLD / ALLIANCE CHAT OVERLAY (right drawer)
+  ════════════════════════════════════════════════ -->
+  <aside class="chat-overlay" id="chatOverlay" role="complementary" aria-label="Chat">
+    <div class="chat-overlay__header">
+      <span class="chat-overlay__title">💬 CHAT</span>
+      <button class="btn-close" onclick="closeChatOverlay()" aria-label="Close chat">✕</button>
+    </div>
+    <div class="chat-overlay__tabs">
+      <button class="chat-overlay__tab active" onclick="switchChatTab(this, 'world')">🌍 WORLD</button>
+      <button class="chat-overlay__tab" onclick="switchChatTab(this, 'alliance')">🤝 ALLIANCE</button>
+      <button class="chat-overlay__tab" onclick="switchChatTab(this, 'dm')">✉ DM</button>
+    </div>
+    <div class="chat-overlay__messages" id="chatMessages">
+      <!-- Populated by chat.js -->
+    </div>
+    <div class="chat-input-wrap">
+      <input
+        class="chat-input"
+        id="chatInput"
+        type="text"
+        placeholder="Press Enter to send..."
+        maxlength="200"
+        aria-label="Chat message input"
+        onkeydown="handleChatKey(event)"
+      >
+      <button class="chat-send-btn" onclick="sendChatMessage()" aria-label="Send message">SEND</button>
+    </div>
+  </aside>
+
+
+  <!-- ════════════════════════════════════════════════
+       AVATAR DROPDOWN
+       Positioned relative to avatar button in navbar
+  ════════════════════════════════════════════════ -->
+  <div class="avatar-dropdown" id="avatarDropdown" role="menu" aria-label="User menu">
+    <div class="avatar-dropdown__profile">
+      <div class="avatar-dropdown__avatar" id="dropdownAvatar">🪖</div>
+      <div>
+        <span class="avatar-dropdown__name" id="dropdownName">GHOST_RECON</span>
+        <span class="avatar-dropdown__rank" id="dropdownRank">⭐ Sergeant II</span>
+      </div>
+    </div>
+    <!-- Wallet strip -->
+    <div class="avatar-dropdown__wallet">
+      <span class="avatar-dropdown__currency cur-diamond">💎 <span id="dd-diamonds">1,240</span></span>
+      <span class="avatar-dropdown__currency cur-gold">🥇 <span id="dd-gold">8,400</span></span>
+      <span class="avatar-dropdown__currency cur-silver">🥈 <span id="dd-silver">22,100</span></span>
+      <span class="avatar-dropdown__currency cur-bronze">🥉 <span id="dd-bronze">105,300</span></span>
+    </div>
+    <!-- Menu items -->
+    <div class="avatar-dropdown__menu">
+      <button class="avatar-dropdown__item" onclick="navigate('profile'); closeAvatarDropdown()" role="menuitem">
+        <span class="avatar-dropdown__item-icon">👤</span> Profile
+      </button>
+      <button class="avatar-dropdown__item" onclick="navigate('lobby'); closeAvatarDropdown()" role="menuitem">
+        <span class="avatar-dropdown__item-icon">⚔</span> My Games
+      </button>
+      <button class="avatar-dropdown__item" onclick="openModal('alliance'); closeAvatarDropdown()" role="menuitem">
+        <span class="avatar-dropdown__item-icon">🤝</span> Alliance
+      </button>
+      <button class="avatar-dropdown__item" onclick="navigate('shop'); closeAvatarDropdown()" role="menuitem">
+        <span class="avatar-dropdown__item-icon">🛒</span> Shop
+      </button>
+      <div class="avatar-dropdown__divider"></div>
+      <button class="avatar-dropdown__item" onclick="openModal('settings'); closeAvatarDropdown()" role="menuitem">
+        <span class="avatar-dropdown__item-icon">⚙</span> Settings
+      </button>
+      <div class="avatar-dropdown__divider"></div>
+      <button class="avatar-dropdown__item avatar-dropdown__item--danger" onclick="handleLogout()" role="menuitem">
+        <span class="avatar-dropdown__item-icon">🚪</span> Log Out
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       TOAST CONTAINER
+  ════════════════════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-label="Notifications"></div>
+
+
+  <!-- ════════════════════════════════════════════════
+       LOADING SCREEN
+       Shown briefly while pages / assets load
+  ════════════════════════════════════════════════ -->
+  <div id="loadingScreen" style="
+    position: fixed;
+    inset: 0;
+    background: #0a0c10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    gap: 24px;
+    transition: opacity 0.4s ease;
+  ">
+    <div style="
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(10px, 2vw, 18px);
+      color: #39ff6a;
+      text-shadow: 0 0 20px rgba(57,255,106,0.5);
+      text-align: center;
+      line-height: 2;
+    ">
+      THE GREAT<br>PIXELS WAR
+    </div>
+    <div style="
+      width: 200px;
+      height: 6px;
+      background: #111520;
+      border: 1px solid #2a3a5c;
+      overflow: hidden;
+    ">
+      <div id="loadBar" style="
+        height: 100%;
+        width: 0%;
+        background: #39ff6a;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 8px rgba(57,255,106,0.5);
+      "></div>
+    </div>
+    <div id="loadText" style="
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      color: #5a7099;
+      letter-spacing: 1px;
+    ">LOADING<span class="loading-dots"></span></div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       GLOBAL APP STATE
+       Shared state object — read/written by all JS modules
+  ════════════════════════════════════════════════ -->
+  <script>
+    // ── App state (global, no framework) ──
+    window.GPW = {
+      // Current page
+      currentPage: 'home',
+      pageHistory: [],
+
+      // Auth state (mocked — replace with real auth)
+      user: null,
+      isLoggedIn: false,
+
+      // Mock logged-in user data
+      mockUser: {
+        id: 'usr_001',
+        username: 'GHOST_RECON',
+        avatar: '🪖',
+        flag: '🏴',
+        title: 'Iron Veteran',
+        rank: 'Sergeant II',
+        xp: 3820,
+        xpNext: 6000,
+        vip: null, // null | 'gold' | 'diamond'
+        wallet: {
+          diamonds: 1240,
+          gold:     8400,
+          silver:   22100,
+          bronze:   105300
+        },
+        stats: {
+          wins:       148,
+          losses:     62,
+          winRate:    70,
+          turns:      4820,
+          cities:     312,
+          units:      9841
+        },
+        alliance: null
+      },
+
+      // Active chat tab
+      chatTab: 'world',
+
+      // Active notif tab
+      notifTab: 'all',
+
+      // Unread counts
+      unreadNotifs: 3,
+      unreadMessages: 2,
+
+      // Season info
+      season: {
+        number: 12,
+        name: 'Operation Iron Tide',
+        endsIn: { days: 18, hours: 7, minutes: 24 },
+        bidPhaseActive: true,
+        bidEndsIn: { days: 2, hours: 14, minutes: 32 }
+      },
+
+      // Settings (persisted to localStorage)
+      settings: {
+        scanlines: true,
+        soundEnabled: true,
+        musicVolume: 60,
+        sfxVolume: 80,
+        notifications: {
+          turns: true,
+          bids: true,
+          alliance: true,
+          system: true
+        },
+        privacy: {
+          showOnline: true,
+          allowMessages: 'all', // 'all' | 'friends' | 'none'
+          allowInvites: 'all'
+        }
+      }
+    };
+  </script>
+
+
+  <!-- ════════════════════════════════════════════════
+       JAVASCRIPT — load order matters
+  ════════════════════════════════════════════════ -->
+
+  <!-- Foundation -->
+  <script src="js/toast.js"></script>
+  <script src="js/modals.js"></script>
+  <script src="js/router.js"></script>
+
+  <!-- Components -->
+  <script src="js/navbar.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/chat.js"></script>
+
+  <!-- Pages -->
+  <script src="js/lobby.js"></script>
+  <script src="js/create-game.js"></script>
+  <script src="js/season-war.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/leaderboard.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/profile.js"></script>
+
+  <!-- ── BOOT SCRIPT ── -->
+  <script>
+    // ── Load settings from localStorage ──
+    (function loadSettings() {
+      try {
+        const saved = localStorage.getItem('gpw_settings');
+        if (saved) {
+          Object.assign(window.GPW.settings, JSON.parse(saved));
+        }
+      } catch (e) { /* ignore */ }
+
+      // Apply scanlines setting
+      if (!window.GPW.settings.scanlines) {
+        document.body.classList.add('no-scanlines');
+      }
+    })();
+
+    // ── Simulate loading progress ──
+    (function bootLoader() {
+      const bar  = document.getElementById('loadBar');
+      const text = document.getElementById('loadText');
+      const screen = document.getElementById('loadingScreen');
+
+      const steps = [
+        { pct: 20,  msg: 'LOADING ASSETS' },
+        { pct: 45,  msg: 'BUILDING MAP' },
+        { pct: 70,  msg: 'DEPLOYING UNITS' },
+        { pct: 90,  msg: 'ENTERING WAR' },
+        { pct: 100, msg: 'READY' }
+      ];
+
+      let i = 0;
+      const tick = setInterval(() => {
+        if (i >= steps.length) {
+          clearInterval(tick);
+          setTimeout(() => {
+            screen.style.opacity = '0';
+            setTimeout(() => screen.remove(), 400);
+          }, 300);
+          return;
+        }
+        bar.style.width  = steps[i].pct + '%';
+        text.textContent = steps[i].msg;
+        i++;
+      }, 280);
+    })();
+
+    // ── System banner ──
+    function closeBanner() {
+      const banner = document.getElementById('systemBanner');
+      banner.style.display = 'none';
+      document.body.classList.remove('has-banner');
+      try { localStorage.setItem('gpw_banner_closed', '1'); } catch(e) {}
+    }
+
+    // Show banner (check if previously dismissed)
+    (function initBanner() {
+      try {
+        if (!localStorage.getItem('gpw_banner_closed')) {
+          setTimeout(() => {
+            const banner = document.getElementById('systemBanner');
+            banner.style.display = 'flex';
+            document.body.classList.add('has-banner');
+          }, 1200);
+        }
+      } catch(e) {}
+    })();
+
+    // ── Close dropdowns on outside click ──
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('avatarDropdown');
+      const navAvatar = document.getElementById('navAvatar');
+      if (dropdown && !dropdown.contains(e.target) && navAvatar && !navAvatar.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+
+    // ── Close drawers on Escape ──
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        // Close any open modal
+        document.querySelectorAll('.modal-overlay.open').forEach(m => {
+          m.classList.remove('open');
+        });
+        document.body.classList.remove('modal-open');
+
+        // Close panels
+        closeNotifPanel();
+        closeChatOverlay();
+        closeAvatarDropdown();
+
+        // Close mobile menu
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu) mobileMenu.classList.remove('open');
+      }
+    });
+
+    // ── Prevent scroll on modal open ──
+    function handleOverlayClick(e, modalId) {
+      if (e.target === document.getElementById('modal-' + modalId)) {
+        closeModal(modalId);
+      }
+    }
+
+    // ── Panel helpers (called from inline HTML) ──
+    function closeNotifPanel() {
+      document.getElementById('notifPanel').classList.remove('open');
+      const btn = document.getElementById('navNotifBtn');
+      if (btn) btn.classList.remove('active');
+    }
+
+    function closeChatOverlay() {
+      document.getElementById('chatOverlay').classList.remove('open');
+      const btn = document.getElementById('navChatBtn');
+      if (btn) btn.classList.remove('active');
+    }
+
+    function closeAvatarDropdown() {
+      document.getElementById('avatarDropdown').classList.remove('open');
+    }
+
+    function switchNotifTab(btn, tab) {
+      document.querySelectorAll('.notif-panel__tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      window.GPW.notifTab = tab;
+      if (window.renderNotifications) window.renderNotifications(tab);
+    }
+
+    function switchChatTab(btn, tab) {
+      document.querySelectorAll('.chat-overlay__tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      window.GPW.chatTab = tab;
+      if (window.renderChat) window.renderChat(tab);
+    }
+
+    function markAllRead() {
+      window.GPW.unreadNotifs = 0;
+      if (window.updateNotifBadge) window.updateNotifBadge();
+      if (window.renderNotifications) window.renderNotifications(window.GPW.notifTab);
+    }
+
+    function submitBid() {
+      if (window.handleBidSubmit) {
+        window.handleBidSubmit();
+      } else {
+        closeModal('bid');
+        showToast('Bid placed!', 'season', '🏙');
+      }
+    }
+
+    function completePurchase() {
+      if (window.handlePurchaseComplete) {
+        window.handlePurchaseComplete();
+      } else {
+        closeModal('confirm-purchase');
+        showToast('Purchase complete!', 'success', '✅');
+      }
+    }
+
+    function handleLogout() {
+      closeAvatarDropdown();
+      window.GPW.isLoggedIn = false;
+      window.GPW.user = null;
+      if (window.updateNavAuth) window.updateNavAuth();
+      navigate('home');
+      showToast('Logged out successfully', 'neutral', '🚪');
+    }
+  </script>
+
+</body>
+</html>
