@@ -1,0 +1,349 @@
+/* ============================================================
+   SHOP.CSS — The Great Pixels War
+   Shop header, wallet, currency bar, tabs, item grids,
+   diamond packs, VIP comparison, bundle cards, tier filters
+   Depends on: base.css, buttons.css, panels.css
+   ============================================================ */
+
+.shop-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+/* ─── Header ─── */
+.shop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-8);
+  background: var(--bg2);
+  border-bottom: var(--border-w) solid var(--border);
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.shop-header__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xl);
+  color: var(--diamond);
+  text-shadow: 0 0 16px var(--diamond-glow);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.shop-header__sub {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+}
+
+.shop-wallet {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.shop-wallet__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  letter-spacing: 1px;
+}
+
+/* ─── Currency Reminder Bar ─── */
+.shop-currency-bar {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-2) var(--space-8);
+}
+
+.shop-currency-bar__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  letter-spacing: 1px;
+}
+
+.shop-currency-item { white-space: nowrap; }
+.shop-currency-sep  { color: var(--text-muted); }
+
+/* ─── Tab Nav ─── */
+.shop-tabs {
+  padding: 0 var(--space-8);
+  background: var(--bg2);
+  border-bottom: var(--border-w) solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.shop-tabs::-webkit-scrollbar { display: none; }
+.shop-tabs .tab-group--underline { border-bottom: none; flex-wrap: nowrap; }
+
+/* ─── Content Area ─── */
+.shop-content {
+  flex: 1;
+  padding: var(--space-6) var(--space-8);
+  max-width: var(--content-max);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.shop-loading { padding: var(--space-4); }
+
+/* ─── Section header inside tab ─── */
+.shop-section-title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-md);
+  color: var(--text);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--border-w) solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  letter-spacing: 1px;
+}
+
+/* ─── Diamond Packs Grid ─── */
+.shop-diamond-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+/* ─── Item Cards Grid ─── */
+.shop-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ─── Tier Filter Bar ─── */
+.shop-tier-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.shop-tier-filter__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+/* ─── Category Sub-tabs (Units) ─── */
+.shop-unit-cats {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.shop-unit-cat {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+}
+
+.shop-unit-cat:hover           { border-color: var(--border2); color: var(--text); }
+.shop-unit-cat.active          { border-color: var(--green); color: var(--green); background: var(--green-subtle); }
+
+/* ─── VIP Comparison ─── */
+.shop-vip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.shop-vip-card {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+.shop-vip-card--gold    { border-color: rgba(245,200,66,0.4); }
+.shop-vip-card--diamond {
+  border-color: var(--diamond);
+  box-shadow: 0 0 24px var(--diamond-glow);
+  animation: pulse-diamond 4s ease-in-out infinite;
+}
+
+.shop-vip-card__header {
+  padding: var(--space-5);
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.shop-vip-card--gold    .shop-vip-card__header { background: rgba(122,96,16,0.15); }
+.shop-vip-card--diamond .shop-vip-card__header { background: rgba(13,58,85,0.3); }
+
+.shop-vip-card__icon  { font-size: 40px; display: block; margin-bottom: var(--space-3); }
+
+.shop-vip-card__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-lg);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.shop-vip-card--gold    .shop-vip-card__name { color: var(--vip-gold); }
+.shop-vip-card--diamond .shop-vip-card__name { color: var(--vip-diamond); }
+
+.shop-vip-card__price {
+  font-family: var(--font-pixel);
+  font-size: var(--px-md);
+  display: block;
+  margin-bottom: var(--space-4);
+}
+
+.shop-vip-card__perks {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.shop-vip-perk {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.shop-vip-perk__icon { flex-shrink: 0; font-size: 16px; }
+
+.shop-vip-card__footer {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.shop-vip-card__footer .btn { width: 100%; }
+
+/* ─── Bundle Cards ─── */
+.shop-bundles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-5);
+}
+
+.shop-bundle-card {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition), transform 0.1s;
+}
+
+.shop-bundle-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+.shop-bundle-card__header {
+  padding: var(--space-5);
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.shop-bundle-card__icons { font-size: 24px; }
+
+.shop-bundle-card__info { flex: 1; }
+
+.shop-bundle-card__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--text);
+  display: block;
+  margin-bottom: var(--space-1);
+  letter-spacing: 1px;
+}
+
+.shop-bundle-card__save {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 2px 6px;
+  letter-spacing: 1px;
+}
+
+.shop-bundle-card__items {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.shop-bundle-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+}
+
+.shop-bundle-item__icon { font-size: 16px; flex-shrink: 0; }
+
+.shop-bundle-card__footer {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.shop-bundle-card__price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.shop-bundle-card__original {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  letter-spacing: 1px;
+}
+
+.shop-bundle-card__discounted {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--diamond);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .shop-header { padding: var(--space-5); }
+  .shop-currency-bar { padding: var(--space-2) var(--space-5); }
+  .shop-tabs { padding: 0 var(--space-5); }
+  .shop-content { padding: var(--space-5); }
+  .shop-vip-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,1063 @@
+/* ============================================================
+   FORMS.CSS — The Great Pixels War
+   All form elements: inputs, selects, textareas, sliders,
+   checkboxes, radio buttons, search, labels, form layouts
+   Depends on: base.css
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────
+   FORM GROUP
+   Wraps label + input together
+───────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline form group (label left, input right) */
+.form-group--inline {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.form-group--inline .form-label {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+/* Two column row */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.form-row--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 600px) {
+  .form-row,
+  .form-row--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   FORM LABEL
+───────────────────────────────────────── */
+.form-label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  line-height: 1.8;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.form-label--bright {
+  color: var(--text);
+}
+
+/* Required asterisk */
+.form-label .required {
+  color: var(--red);
+  font-size: var(--px-xs);
+}
+
+/* Optional tag */
+.form-label .optional {
+  color: var(--text-muted);
+  font-size: var(--px-xs);
+}
+
+/* Helper text below input */
+.form-hint {
+  font-family: var(--font-mono);
+  font-size: var(--mono-sm);
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: var(--space-1);
+}
+
+/* Error text below input */
+.form-error {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--red);
+  margin-top: var(--space-1);
+  letter-spacing: 1px;
+  display: none;
+}
+
+.form-error.visible {
+  display: block;
+}
+
+/* Success text */
+.form-success {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--green);
+  margin-top: var(--space-1);
+  letter-spacing: 1px;
+}
+
+
+/* ─────────────────────────────────────────
+   BASE INPUT STYLES (shared)
+───────────────────────────────────────── */
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--mono-md);
+  padding: 0.55rem 0.9rem;
+  outline: none;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  line-height: 1.5;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+  border-color: var(--border2);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green-dim);
+  background: var(--bg2);
+}
+
+/* Disabled */
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: var(--bg3);
+}
+
+/* Error state */
+.form-input.error,
+.form-select.error,
+.form-textarea.error {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red-dim);
+}
+
+/* Success state */
+.form-input.success,
+.form-select.success,
+.form-textarea.success {
+  border-color: var(--green);
+}
+
+/* Read only */
+.form-input[readonly] {
+  color: var(--text-dim);
+  cursor: default;
+  background: var(--bg3);
+}
+
+
+/* ─────────────────────────────────────────
+   INPUT SIZES
+───────────────────────────────────────── */
+.form-input--sm,
+.form-select--sm {
+  font-size: var(--mono-sm);
+  padding: 0.35rem 0.7rem;
+}
+
+.form-input--lg,
+.form-select--lg {
+  font-size: var(--mono-lg);
+  padding: 0.7rem 1rem;
+}
+
+
+/* ─────────────────────────────────────────
+   INPUT WITH ICON / PREFIX / SUFFIX
+───────────────────────────────────────── */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrap .form-input {
+  flex: 1;
+}
+
+/* Prefix icon (search icon, currency symbol) */
+.input-wrap__prefix {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--text-dim);
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-wrap--prefix .form-input {
+  padding-left: 2.2rem;
+}
+
+/* Suffix (clear button, unit label) */
+.input-wrap__suffix {
+  position: absolute;
+  right: var(--space-3);
+  color: var(--text-dim);
+  font-size: 14px;
+  z-index: 1;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.input-wrap__suffix:hover {
+  color: var(--text);
+}
+
+.input-wrap--suffix .form-input {
+  padding-right: 2.2rem;
+}
+
+/* Currency label suffix */
+.input-wrap__currency {
+  position: absolute;
+  right: var(--space-3);
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+
+/* ─────────────────────────────────────────
+   SEARCH INPUT
+───────────────────────────────────────── */
+.search-input {
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--mono-md);
+  padding: 0.45rem 0.9rem 0.45rem 2.4rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  width: 100%;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green-dim);
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 160px;
+}
+
+.search-wrap::before {
+  content: '⌕';
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-size: 18px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+/* ─────────────────────────────────────────
+   SELECT / DROPDOWN
+───────────────────────────────────────── */
+.form-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a7099'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.2rem;
+}
+
+.form-select option {
+  background: var(--bg2);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--mono-md);
+}
+
+
+/* ─────────────────────────────────────────
+   TEXTAREA
+───────────────────────────────────────── */
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+.form-textarea--no-resize {
+  resize: none;
+}
+
+
+/* ─────────────────────────────────────────
+   RANGE SLIDER
+───────────────────────────────────────── */
+.form-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  outline: none;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.form-range::-webkit-slider-track {
+  background: var(--bg);
+  height: 6px;
+}
+
+.form-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--green);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+  border-radius: 0;
+  image-rendering: pixelated;
+  box-shadow: 0 0 8px var(--green-glow);
+  transition: box-shadow var(--transition);
+}
+
+.form-range::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 14px var(--green-glow);
+}
+
+.form-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--green);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+  border-radius: 0;
+  box-shadow: 0 0 8px var(--green-glow);
+}
+
+/* Range with value display */
+.range-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+}
+
+.range-value {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--green);
+  text-align: center;
+}
+
+/* Dual range (min/max slider) */
+.dual-range-wrap {
+  position: relative;
+  height: 6px;
+  margin: var(--space-3) 0;
+}
+
+.dual-range-wrap .form-range {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.dual-range-wrap .form-range::-webkit-slider-thumb {
+  pointer-events: all;
+}
+
+
+/* ─────────────────────────────────────────
+   NUMBER INPUT (with +/- controls)
+───────────────────────────────────────── */
+.number-input-wrap {
+  display: flex;
+  align-items: stretch;
+  border: var(--border-w) solid var(--border);
+  background: var(--bg);
+  transition: border-color var(--transition);
+}
+
+.number-input-wrap:focus-within {
+  border-color: var(--green);
+}
+
+.number-input-wrap .form-input {
+  border: none;
+  text-align: center;
+  flex: 1;
+  min-width: 60px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.number-input-wrap .form-input:focus {
+  box-shadow: none;
+  border: none;
+}
+
+.number-btn {
+  width: 32px;
+  background: var(--bg3);
+  border: none;
+  border-left: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.number-btn:first-child {
+  border-left: none;
+  border-right: 1px solid var(--border);
+}
+
+.number-btn:hover {
+  background: var(--panel);
+  color: var(--green);
+}
+
+
+/* ─────────────────────────────────────────
+   CHECKBOX
+───────────────────────────────────────── */
+.checkbox-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.form-checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.form-checkbox:hover {
+  border-color: var(--green);
+}
+
+.form-checkbox:checked {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.form-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  width: 4px;
+  height: 8px;
+  border: 2px solid var(--bg);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.checkbox-label {
+  font-family: var(--font-mono);
+  font-size: var(--mono-md);
+  color: var(--text);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.checkbox-label small {
+  display: block;
+  font-size: var(--mono-sm);
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+
+/* ─────────────────────────────────────────
+   RADIO BUTTON
+───────────────────────────────────────── */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.radio-group--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.radio-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.form-radio {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color var(--transition);
+}
+
+.form-radio:hover {
+  border-color: var(--green);
+}
+
+.form-radio:checked {
+  border-color: var(--green);
+}
+
+.form-radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green-glow);
+}
+
+.radio-label {
+  font-family: var(--font-mono);
+  font-size: var(--mono-md);
+  color: var(--text);
+  cursor: pointer;
+}
+
+
+/* ─────────────────────────────────────────
+   RADIO CARD (big clickable cards)
+   Used for game mode selection
+───────────────────────────────────────── */
+.radio-card-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.radio-card {
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-4) var(--space-3);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+  user-select: none;
+  position: relative;
+}
+
+.radio-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-card:hover {
+  border-color: var(--border2);
+  background: var(--bg3);
+}
+
+.radio-card.selected,
+.radio-card:has(input:checked) {
+  border-color: var(--green);
+  background: var(--green-subtle);
+  box-shadow: 0 0 14px rgba(57, 255, 106, 0.12);
+}
+
+.radio-card__icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.radio-card__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+.radio-card.selected .radio-card__title {
+  color: var(--green);
+}
+
+.radio-card__desc {
+  font-size: var(--mono-sm);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+  line-height: 1.4;
+}
+
+
+/* ─────────────────────────────────────────
+   DURATION / TIME INPUT
+   Custom input for game duration/turns
+───────────────────────────────────────── */
+.time-input-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.time-input-unit {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.time-input-unit .form-input {
+  width: 80px;
+  text-align: center;
+}
+
+.time-input-unit__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+
+.time-separator {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--text-muted);
+}
+
+
+/* ─────────────────────────────────────────
+   PASSWORD INPUT (with show/hide)
+───────────────────────────────────────── */
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap .form-input {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 16px;
+  transition: color var(--transition);
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle:hover {
+  color: var(--text);
+}
+
+
+/* ─────────────────────────────────────────
+   RESOURCE SLIDERS (Create Game)
+   Bronze / Silver / Gold starting amounts
+───────────────────────────────────────── */
+.resource-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.resource-slider {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.resource-slider__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resource-slider__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  letter-spacing: 1px;
+}
+
+.resource-slider__value {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+}
+
+/* Bronze slider */
+.resource-slider--bronze .form-range::-webkit-slider-thumb { background: var(--bronze); box-shadow: 0 0 8px rgba(205, 127, 50, 0.4); }
+.resource-slider--bronze .form-range::-moz-range-thumb     { background: var(--bronze); }
+.resource-slider--bronze .resource-slider__label           { color: var(--bronze); }
+.resource-slider--bronze .resource-slider__value           { color: var(--bronze); }
+
+/* Silver slider */
+.resource-slider--silver .form-range::-webkit-slider-thumb { background: var(--silver); box-shadow: 0 0 8px rgba(176, 184, 200, 0.4); }
+.resource-slider--silver .form-range::-moz-range-thumb     { background: var(--silver); }
+.resource-slider--silver .resource-slider__label           { color: var(--silver); }
+.resource-slider--silver .resource-slider__value           { color: var(--silver); }
+
+/* Gold slider */
+.resource-slider--gold .form-range::-webkit-slider-thumb { background: var(--gold); box-shadow: 0 0 8px rgba(245, 200, 66, 0.4); }
+.resource-slider--gold .form-range::-moz-range-thumb     { background: var(--gold); }
+.resource-slider--gold .resource-slider__label           { color: var(--gold); }
+.resource-slider--gold .resource-slider__value           { color: var(--gold); }
+
+
+/* ─────────────────────────────────────────
+   BID INPUT (Season War)
+───────────────────────────────────────── */
+.bid-input-wrap {
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  display: flex;
+  align-items: center;
+  transition: border-color var(--transition);
+}
+
+.bid-input-wrap:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--yellow-dim);
+}
+
+.bid-currency {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--gold);
+  padding: 0 var(--space-3);
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+
+.bid-input-wrap .form-input {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  flex: 1;
+}
+
+.bid-input-wrap .form-input:focus {
+  box-shadow: none;
+  border: none;
+}
+
+.bid-max-btn {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  padding: 0 var(--space-3);
+  background: var(--bg3);
+  border: none;
+  border-left: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+  height: 100%;
+  white-space: nowrap;
+}
+
+.bid-max-btn:hover {
+  color: var(--gold);
+  background: var(--panel);
+}
+
+
+/* ─────────────────────────────────────────
+   CHAT INPUT
+───────────────────────────────────────── */
+.chat-input-wrap {
+  display: flex;
+  border-top: 1px solid var(--border);
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--bg);
+  border: none;
+  padding: var(--space-3) var(--space-4);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--mono-md);
+  outline: none;
+  transition: background var(--transition);
+}
+
+.chat-input::placeholder {
+  color: var(--text-muted);
+}
+
+.chat-input:focus {
+  background: var(--bg2);
+}
+
+.chat-send-btn {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  padding: 0 var(--space-4);
+  background: var(--green-dim);
+  border: none;
+  border-left: 1px solid var(--border);
+  color: var(--green);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.chat-send-btn:hover {
+  background: var(--green);
+  color: var(--bg);
+}
+
+
+/* ─────────────────────────────────────────
+   FORM SECTION DIVIDER
+───────────────────────────────────────── */
+.form-section {
+  padding-top: var(--space-5);
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.form-section-title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--cyan);
+  margin-bottom: var(--space-4);
+  letter-spacing: 1px;
+}
+
+
+/* ─────────────────────────────────────────
+   CHARACTER COUNTER
+───────────────────────────────────────── */
+.char-counter {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  text-align: right;
+  margin-top: var(--space-1);
+  letter-spacing: 1px;
+}
+
+.char-counter.warning { color: var(--yellow); }
+.char-counter.danger  { color: var(--red); }
+
+
+/* ─────────────────────────────────────────
+   SETTINGS FORM ROWS
+   Label left, control right
+───────────────────────────────────────── */
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-row:last-child {
+  border-bottom: none;
+}
+
+.settings-row__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-row__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-1);
+}
+
+.settings-row__desc {
+  font-size: var(--mono-sm);
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+.settings-row__control {
+  flex-shrink: 0;
+}
+
+
+/* ─────────────────────────────────────────
+   VOLUME SLIDER (Settings)
+───────────────────────────────────────── */
+.volume-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 180px;
+}
+
+.volume-icon {
+  color: var(--text-dim);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.volume-wrap .form-range {
+  flex: 1;
+}
+
+.volume-value {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  min-width: 28px;
+  text-align: right;
+}
+
+
+/* ─────────────────────────────────────────
+   FORM FOOTER (modal actions)
+───────────────────────────────────────── */
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.form-footer--between {
+  justify-content: space-between;
+}
+
+.form-footer--center {
+  justify-content: center;
+}
+
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 600px) {
+  .radio-card-group {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .time-input-group {
+    gap: var(--space-1);
+  }
+
+  .time-input-unit .form-input {
+    width: 64px;
+  }
+
+  .form-footer {
+    flex-direction: column;
+  }
+
+  .form-footer .btn {
+    width: 100%;
+  }
+
+  .volume-wrap {
+    min-width: 140px;
+  }
+}

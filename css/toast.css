@@ -1,0 +1,478 @@
+/* ============================================================
+   TOAST.CSS — The Great Pixels War
+   Toast notification system: container, variants, animations,
+   progress bar, stacking, and dismiss button
+   Depends on: base.css
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────
+   TOAST CONTAINER
+   Fixed bottom-right, stacks upward
+───────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-2);
+  pointer-events: none;
+  max-width: 320px;
+  width: calc(100vw - var(--space-8));
+}
+
+
+/* ─────────────────────────────────────────
+   BASE TOAST
+───────────────────────────────────────── */
+.toast {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  pointer-events: all;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+
+  /* Entry animation */
+  animation: toast-enter 0.2s ease forwards;
+}
+
+/* Exit animation class — added by JS before removal */
+.toast.toast--exit {
+  animation: toast-exit 0.25s ease forwards;
+}
+
+
+/* ─────────────────────────────────────────
+   TOAST ICON
+───────────────────────────────────────── */
+.toast__icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  line-height: 1;
+}
+
+
+/* ─────────────────────────────────────────
+   TOAST BODY
+───────────────────────────────────────── */
+.toast__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.toast__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  letter-spacing: 1px;
+  line-height: 1.8;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.toast__message {
+  font-family: var(--font-mono);
+  font-size: var(--mono-sm);
+  color: var(--text-dim);
+  line-height: 1.4;
+  display: block;
+  word-break: break-word;
+}
+
+/* Toast with only message (no title) */
+.toast--simple .toast__title {
+  font-family: var(--font-mono);
+  font-size: var(--mono-md);
+  letter-spacing: 0;
+  margin-bottom: 0;
+}
+
+
+/* ─────────────────────────────────────────
+   DISMISS BUTTON
+───────────────────────────────────────── */
+.toast__close {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition);
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.toast__close:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+
+/* ─────────────────────────────────────────
+   PROGRESS BAR
+   Shrinks from 100% to 0 over toast duration
+───────────────────────────────────────── */
+.toast__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: left;
+  animation: toast-progress linear forwards;
+}
+
+/* Duration set via JS: style="animation-duration: 3s" */
+
+
+/* ─────────────────────────────────────────
+   COLOUR VARIANTS
+───────────────────────────────────────── */
+
+/* SUCCESS — green */
+.toast--success {
+  border-color: var(--green);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(57, 255, 106, 0.1);
+}
+
+.toast--success .toast__title   { color: var(--green); }
+.toast--success .toast__progress { background: var(--green); }
+.toast--success .toast__close:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* ERROR — red */
+.toast--error {
+  border-color: var(--red);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 58, 58, 0.1);
+}
+
+.toast--error .toast__title   { color: var(--red); }
+.toast--error .toast__progress { background: var(--red); }
+.toast--error .toast__close:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* WARNING — yellow */
+.toast--warning {
+  border-color: var(--yellow);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(245, 200, 66, 0.1);
+}
+
+.toast--warning .toast__title   { color: var(--yellow); }
+.toast--warning .toast__progress { background: var(--yellow); }
+.toast--warning .toast__close:hover {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+/* INFO — cyan */
+.toast--info {
+  border-color: var(--cyan);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(0, 229, 255, 0.08);
+}
+
+.toast--info .toast__title   { color: var(--cyan); }
+.toast--info .toast__progress { background: var(--cyan); }
+.toast--info .toast__close:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* DIAMOND — premium actions */
+.toast--diamond {
+  border-color: var(--diamond);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(79, 195, 247, 0.1);
+}
+
+.toast--diamond .toast__title   { color: var(--diamond); }
+.toast--diamond .toast__progress { background: var(--diamond); }
+.toast--diamond .toast__close:hover {
+  border-color: var(--diamond);
+  color: var(--diamond);
+}
+
+/* NEUTRAL — plain system messages */
+.toast--neutral {
+  border-color: var(--border2);
+}
+
+.toast--neutral .toast__title   { color: var(--text); }
+.toast--neutral .toast__progress { background: var(--border2); }
+
+/* WAR — special in-game events (battle results, city captures) */
+.toast--war {
+  border-color: var(--red);
+  background: linear-gradient(135deg, var(--panel), rgba(139, 26, 26, 0.15));
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(255, 58, 58, 0.15);
+}
+
+.toast--war .toast__title   { color: var(--red); }
+.toast--war .toast__message { color: var(--text); }
+.toast--war .toast__progress { background: var(--red); }
+
+/* SEASON — season war events */
+.toast--season {
+  border-color: var(--yellow);
+  background: linear-gradient(135deg, var(--panel), rgba(122, 96, 16, 0.15));
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(245, 200, 66, 0.12);
+}
+
+.toast--season .toast__title   { color: var(--yellow); }
+.toast--season .toast__message { color: var(--text); }
+.toast--season .toast__progress { background: var(--yellow); }
+
+/* ALLIANCE — alliance events */
+.toast--alliance {
+  border-color: var(--cyan);
+  background: linear-gradient(135deg, var(--panel), rgba(0, 96, 112, 0.15));
+}
+
+.toast--alliance .toast__title   { color: var(--cyan); }
+.toast--alliance .toast__progress { background: var(--cyan); }
+
+/* REWARD — currency / item earned */
+.toast--reward {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, var(--panel), rgba(122, 96, 16, 0.12));
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(245, 200, 66, 0.1);
+}
+
+.toast--reward .toast__title   { color: var(--gold); }
+.toast--reward .toast__progress { background: var(--gold); }
+
+
+/* ─────────────────────────────────────────
+   TOAST SIZES
+───────────────────────────────────────── */
+
+/* Compact — single line, no icon */
+.toast--compact {
+  padding: var(--space-2) var(--space-4);
+  align-items: center;
+}
+
+.toast--compact .toast__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  letter-spacing: 1px;
+  margin-bottom: 0;
+}
+
+/* Large — for important events */
+.toast--large {
+  padding: var(--space-5) var(--space-5);
+}
+
+.toast--large .toast__icon {
+  font-size: 28px;
+}
+
+.toast--large .toast__title {
+  font-size: var(--px-sm);
+  margin-bottom: var(--space-1);
+}
+
+.toast--large .toast__message {
+  font-size: var(--mono-md);
+}
+
+
+/* ─────────────────────────────────────────
+   TOAST WITH ACTION BUTTON
+───────────────────────────────────────── */
+.toast__actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.toast__action-btn {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  padding: 3px var(--space-3);
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+}
+
+.toast__action-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.toast__action-btn--primary {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.toast__action-btn--primary:hover {
+  background: var(--green);
+  color: var(--bg);
+}
+
+
+/* ─────────────────────────────────────────
+   SYSTEM ANNOUNCEMENT BANNER
+   Full width top banner for major events
+   (season start, maintenance warning etc.)
+───────────────────────────────────────── */
+.system-banner {
+  position: fixed;
+  top: var(--navbar-h);
+  left: 0;
+  right: 0;
+  z-index: calc(var(--z-navbar) - 1);
+  padding: var(--space-2) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  letter-spacing: 1px;
+  border-bottom: var(--border-w) solid;
+  animation: fade-in 0.3s ease;
+}
+
+.system-banner--warning {
+  background: rgba(122, 96, 16, 0.6);
+  border-color: var(--yellow);
+  color: var(--yellow);
+  backdrop-filter: blur(4px);
+}
+
+.system-banner--info {
+  background: rgba(0, 60, 80, 0.6);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  backdrop-filter: blur(4px);
+}
+
+.system-banner--season {
+  background: rgba(57, 255, 106, 0.07);
+  border-color: var(--green);
+  color: var(--green);
+  backdrop-filter: blur(4px);
+}
+
+.system-banner__close {
+  position: absolute;
+  right: var(--space-6);
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.6;
+  transition: opacity var(--transition);
+}
+
+.system-banner__close:hover {
+  opacity: 1;
+}
+
+/* When banner is visible, push page content down */
+body.has-banner .page-wrapper {
+  padding-top: calc(var(--navbar-h) + 36px);
+}
+
+
+/* ─────────────────────────────────────────
+   KEYFRAME ANIMATIONS
+───────────────────────────────────────── */
+
+@keyframes toast-enter {
+  from {
+    transform: translateX(110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toast-exit {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+    max-height: 200px;
+    margin-bottom: var(--space-2);
+  }
+  to {
+    transform: translateX(110%);
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@keyframes toast-progress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .toast-container {
+    bottom: var(--space-4);
+    right: var(--space-4);
+    left: var(--space-4);
+    max-width: none;
+    width: auto;
+  }
+
+  .toast--large {
+    padding: var(--space-4);
+  }
+
+  .system-banner {
+    font-size: 5px;
+    padding: var(--space-2) var(--space-4);
+    text-align: center;
+    flex-wrap: wrap;
+  }
+}

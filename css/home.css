@@ -1,0 +1,485 @@
+/* ============================================================
+   HOME.CSS — The Great Pixels War
+   Hero, season banner, mode grid, features, map tiers,
+   how-to steps, currency cards, footer
+   Depends on: base.css, buttons.css, panels.css
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────
+   PAGE WRAPPER
+───────────────────────────────────────── */
+.home-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-section {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-6);
+  width: 100%;
+}
+
+
+/* ─────────────────────────────────────────
+   HERO SECTION
+───────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: calc(100vh - var(--navbar-h));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-12) var(--space-8);
+  overflow: hidden;
+}
+
+/* Pixel grid from base.css applied via .pixel-grid-bg */
+
+.hero__content {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.hero__eyebrow {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 4px;
+  line-height: 1;
+}
+
+.hero__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-hero);
+  color: var(--green);
+  text-shadow:
+    0 0 30px rgba(57, 255, 106, 0.5),
+    0 0 60px rgba(57, 255, 106, 0.15);
+  line-height: 1.8;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.hero__title-war {
+  color: var(--red);
+  text-shadow:
+    0 0 30px rgba(255, 58, 58, 0.6),
+    0 0 60px rgba(255, 58, 58, 0.2);
+}
+
+.hero__subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--mono-lg);
+  color: var(--text-dim);
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+.hero__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* Map art panel */
+.hero__map-art {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-map-svg {
+  width: 100%;
+  max-width: 420px;
+  border: var(--border-w) solid var(--border);
+  background: var(--bg2);
+  box-shadow:
+    0 0 40px rgba(57, 255, 106, 0.08),
+    inset 0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive hero */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    min-height: auto;
+    padding: var(--space-10) var(--space-6);
+  }
+
+  .hero__subtitle { max-width: 100%; }
+  .hero__actions  { justify-content: center; }
+  .hero__map-art  { display: none; }
+  .stat-strip     { gap: var(--space-6); }
+}
+
+
+/* ─────────────────────────────────────────
+   SEASON WAR BANNER
+───────────────────────────────────────── */
+.home-season-banner {
+  background: linear-gradient(
+    135deg,
+    rgba(122, 96, 16, 0.15),
+    rgba(245, 200, 66, 0.05)
+  );
+  border-top: var(--border-w) solid rgba(245, 200, 66, 0.3);
+  border-bottom: var(--border-w) solid rgba(245, 200, 66, 0.3);
+  padding: var(--space-8) var(--space-8);
+}
+
+.home-season-banner__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.home-season-banner__left {
+  flex: 1;
+  min-width: 280px;
+}
+
+.home-season-banner__eyebrow {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--red);
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: var(--space-2);
+  animation: blink 1.5s step-end infinite;
+}
+
+.home-season-banner__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xl);
+  color: var(--yellow);
+  text-shadow: 0 0 20px var(--yellow-glow);
+  margin: 0 0 var(--space-3) 0;
+  line-height: 1.8;
+}
+
+.home-season-banner__desc {
+  font-family: var(--font-mono);
+  font-size: var(--mono-lg);
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.home-season-banner__desc strong {
+  color: var(--yellow);
+  font-weight: normal;
+}
+
+.home-season-banner__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-4);
+}
+
+/* Countdown timer */
+.home-season-timer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.home-season-timer__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.home-season-timer__num {
+  font-family: var(--font-pixel);
+  font-size: var(--px-2xl);
+  color: var(--yellow);
+  text-shadow: 0 0 12px var(--yellow-glow);
+  display: block;
+  min-width: 48px;
+  text-align: center;
+}
+
+.home-season-timer__label {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.home-season-timer__sep {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xl);
+  color: var(--yellow-dim);
+  padding-bottom: var(--space-3);
+  animation: blink 1s step-end infinite;
+}
+
+@media (max-width: 768px) {
+  .home-season-banner__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-season-banner__right {
+    align-items: flex-start;
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   GAME MODES GRID
+───────────────────────────────────────── */
+.home-modes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  .home-modes-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .home-modes-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ─────────────────────────────────────────
+   MAP TIER CARDS
+───────────────────────────────────────── */
+.home-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.home-tier-card {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-5);
+  text-align: center;
+  position: relative;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.home-tier-card:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
+}
+
+.home-tier-card--featured {
+  border-color: var(--yellow);
+  background: linear-gradient(135deg, var(--panel), rgba(122, 96, 16, 0.1));
+}
+
+.home-tier-card--featured:hover {
+  border-color: var(--yellow);
+  box-shadow: 0 0 24px rgba(245, 200, 66, 0.15);
+}
+
+.home-tier-card__num {
+  font-family: var(--font-pixel);
+  font-size: var(--px-3xl);
+  color: var(--border2);
+  margin-bottom: var(--space-3);
+  line-height: 1;
+}
+
+.home-tier-card--featured .home-tier-card__num {
+  color: var(--yellow-dim);
+}
+
+.home-tier-card__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-md);
+  color: var(--text);
+  margin-bottom: var(--space-2);
+  letter-spacing: 1px;
+}
+
+.home-tier-card--featured .home-tier-card__name {
+  color: var(--yellow);
+  text-shadow: 0 0 10px var(--yellow-glow);
+}
+
+.home-tier-card__range {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--cyan);
+  margin-bottom: var(--space-3);
+  letter-spacing: 1px;
+}
+
+.home-tier-card__desc {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: var(--space-3);
+}
+
+.home-tier-card__players {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.home-tier-card__badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  padding: 2px var(--space-2);
+  background: var(--yellow);
+  color: var(--bg);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 900px) {
+  .home-tier-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .home-tier-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ─────────────────────────────────────────
+   HOW TO PLAY STEPS
+───────────────────────────────────────── */
+.home-steps {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.home-step {
+  flex: 1;
+  min-width: 180px;
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-5);
+  position: relative;
+  transition: border-color var(--transition);
+}
+
+.home-step:hover {
+  border-color: var(--green);
+}
+
+.home-step__num {
+  font-family: var(--font-pixel);
+  font-size: var(--px-3xl);
+  color: var(--green-dim);
+  margin-bottom: var(--space-3);
+  line-height: 1;
+}
+
+.home-step__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--green);
+  margin-bottom: var(--space-3);
+  letter-spacing: 1px;
+}
+
+.home-step__desc {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.home-step__arrow {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xl);
+  color: var(--border2);
+  padding-top: var(--space-8);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .home-steps        { flex-direction: column; }
+  .home-step__arrow  { display: none; }
+  .home-step         { min-width: auto; }
+}
+
+
+/* ─────────────────────────────────────────
+   CURRENCY CARDS
+───────────────────────────────────────── */
+.home-currency-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.home-currency-card {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.home-currency-card:hover {
+  border-color: var(--border2);
+}
+
+.home-currency-card--premium {
+  border-color: rgba(79, 195, 247, 0.3);
+  background: linear-gradient(135deg, var(--panel), rgba(13, 58, 85, 0.2));
+}
+
+.home-currency-card--premium:hover {
+  border-color: var(--diamond);
+  box-shadow: 0 0 20px var(--diamond-glow);
+}
+
+.home-currency-card__icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.home-currency-card__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  margin-bottom: var(--space-3);
+  letter-spacing: 1px;
+}
+
+.home-currency-card__desc {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .home-currency-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .home-currency-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ─────────────────────────────────────────
+   FEATURES GRID (override for home page)
+───────────────────────────────────────── */
+.home-section .features-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}

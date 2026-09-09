@@ -1,0 +1,237 @@
+/* ============================================================
+   STORY.CSS — The Great Pixels War
+   Story arc header, mode toggle, chapter cards grid,
+   active sessions table, past seasons archive
+   Depends on: base.css, buttons.css, panels.css
+   ============================================================ */
+
+.story-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+/* ─── Arc Header ─── */
+.story-arc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-8);
+  background: linear-gradient(135deg, var(--bg2), rgba(0, 60, 80, 0.15));
+  border-bottom: var(--border-w) solid var(--border);
+  flex-wrap: wrap;
+}
+
+.story-arc-header__inner { flex: 1; min-width: 280px; }
+
+.story-arc-header__season {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  margin-bottom: var(--space-2);
+}
+
+.story-arc-header__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xl);
+  color: var(--cyan);
+  text-shadow: 0 0 20px var(--cyan-glow);
+  margin: 0 0 var(--space-4) 0;
+  letter-spacing: 1px;
+}
+
+.story-arc-header__lore {
+  font-size: var(--mono-lg);
+  color: var(--text-dim);
+  line-height: 1.7;
+  max-width: 600px;
+  margin-bottom: var(--space-4);
+}
+
+.story-arc-header__meta {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.story-arc-meta-item {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+/* Progress */
+.story-arc-header__progress { flex-shrink: 0; min-width: 200px; }
+
+.story-arc-progress { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.story-arc-progress__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.story-arc-progress__bar-wrap {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  height: 10px;
+  width: 200px;
+}
+
+.story-arc-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan-dim), var(--cyan));
+  transition: width 0.5s ease;
+}
+
+.story-arc-progress__text {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+}
+
+@media (max-width: 768px) {
+  .story-arc-header { padding: var(--space-5); flex-direction: column; }
+  .story-arc-progress__bar-wrap { width: 100%; }
+}
+
+/* ─── Mode Toggle ─── */
+.story-mode-toggle {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-4) var(--space-8);
+}
+
+.story-mode-toggle__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.story-mode-toggle__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.story-mode-toggle__desc {
+  font-size: var(--mono-md);
+  color: var(--text-muted);
+  flex: 1;
+  min-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .story-mode-toggle { padding: var(--space-4) var(--space-5); }
+  .story-mode-toggle__inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* ─── Content ─── */
+.story-content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+  width: 100%;
+}
+
+.story-section-title { margin-bottom: var(--space-5); }
+
+/* ─── Chapter Cards Grid ─── */
+.story-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+@media (max-width: 900px) { .story-chapters-grid { grid-template-columns: 1fr; } }
+
+/* Active chapter highlight */
+.chapter-card--active {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+}
+
+.chapter-card__footer {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border);
+  background: var(--bg3);
+}
+
+.chapter-card__footer .btn { flex: 1; }
+
+/* ─── Archive ─── */
+.story-archive {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.story-archive-season {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+
+.story-archive-season:hover { border-color: var(--border2); }
+
+.story-archive-season__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.story-archive-season__num {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-right: var(--space-3);
+}
+
+.story-archive-season__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--text);
+  letter-spacing: 1px;
+}
+
+.story-archive-season__toggle {
+  font-size: var(--mono-lg);
+  color: var(--text-muted);
+  transition: transform var(--transition);
+}
+
+.story-archive-season__body {
+  border-top: 1px solid var(--border);
+  background: var(--bg3);
+}
+
+.story-archive-chapters { padding: var(--space-3) var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
+
+.story-archive-chapter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: var(--mono-md);
+  gap: var(--space-3);
+}
+
+.story-archive-chapter--done   { border-color: rgba(57,255,106,0.2); }
+.story-archive-chapter--locked { opacity: 0.6; }

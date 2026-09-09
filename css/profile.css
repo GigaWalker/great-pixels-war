@@ -1,0 +1,393 @@
+/* ============================================================
+   PROFILE.CSS — The Great Pixels War
+   Profile header, avatar, info, wallet, tabs, stats panel,
+   season history, cosmetics grid, achievements, bid history
+   Depends on: base.css, buttons.css, panels.css
+   ============================================================ */
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+/* ─── Header ─── */
+.profile-header {
+  background: var(--bg2);
+  border-bottom: var(--border-w) solid var(--border);
+  padding: var(--space-6) var(--space-8);
+}
+
+.profile-header__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+/* ─── Avatar ─── */
+.profile-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-avatar {
+  width: 88px;
+  height: 88px;
+  background: var(--bg3);
+  border: var(--border-w) solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  image-rendering: pixelated;
+  box-shadow: 0 0 20px rgba(57,255,106,0.15);
+}
+
+.profile-avatar__vip {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.profile-avatar__edit {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  font-size: 10px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Info block ─── */
+.profile-info {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.profile-info__top {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.profile-info__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xl);
+  color: var(--green);
+  text-shadow: 0 0 12px rgba(57,255,106,0.4);
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.profile-info__name.vip-gold    { color: var(--vip-gold); }
+.profile-info__name.vip-diamond { color: var(--vip-diamond); }
+
+.profile-info__title {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.profile-info__rank {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--yellow);
+  letter-spacing: 1px;
+}
+
+.profile-xp-wrap {
+  max-width: 320px;
+}
+
+.profile-info__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--mono-md);
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.profile-info__flag { font-size: 20px; }
+
+/* ─── Wallet ─── */
+.profile-wallet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 240px;
+}
+
+.profile-wallet__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.profile-wallet__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* ─── Tabs ─── */
+.profile-tabs {
+  padding: 0 var(--space-8);
+  background: var(--bg2);
+  border-bottom: var(--border-w) solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.profile-tabs::-webkit-scrollbar { display: none; }
+.profile-tabs .tab-group--underline { border-bottom: none; flex-wrap: nowrap; }
+
+/* ─── Content ─── */
+.profile-content {
+  flex: 1;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-8);
+  width: 100%;
+}
+
+/* ─── Stats Grid ─── */
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.profile-stat-card {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-4);
+  text-align: center;
+  transition: border-color var(--transition);
+}
+
+.profile-stat-card:hover { border-color: var(--border2); }
+
+.profile-stat-card__val {
+  font-family: var(--font-pixel);
+  font-size: var(--px-lg);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.profile-stat-card__key {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+/* ─── Win/Loss bar ─── */
+.profile-wl-bar {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.profile-wl-bar__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-3);
+}
+
+.profile-wl-track {
+  height: 16px;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: var(--space-2);
+}
+
+.profile-wl-win   { background: var(--green);  transition: width 0.5s ease; }
+.profile-wl-draw  { background: var(--yellow-dim); }
+.profile-wl-loss  { background: var(--red-dim); transition: width 0.5s ease; }
+
+.profile-wl-legend {
+  display: flex;
+  gap: var(--space-5);
+  font-size: var(--mono-md);
+}
+
+.profile-wl-legend__item { display: flex; align-items: center; gap: var(--space-2); }
+.profile-wl-legend__dot  { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ─── Season History ─── */
+.profile-season-list { display: flex; flex-direction: column; gap: var(--space-4); }
+
+.profile-season-row {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-5);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-5);
+  align-items: center;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+
+.profile-season-row:hover { border-color: var(--border2); }
+
+.profile-season-row__num {
+  font-family: var(--font-pixel);
+  font-size: var(--px-lg);
+  color: var(--text-muted);
+  min-width: 60px;
+}
+
+.profile-season-row__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-2);
+}
+
+.profile-season-row__meta {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.profile-season-row__rewards {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+/* ─── Cosmetics Equipped ─── */
+.profile-equipped-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-3);
+}
+
+.profile-equipped-card {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-4);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transition);
+  position: relative;
+}
+
+.profile-equipped-card:hover { border-color: var(--cyan); }
+
+.profile-equipped-card--empty {
+  border-style: dashed;
+  opacity: 0.4;
+  cursor: default;
+}
+
+.profile-equipped-card__icon  { font-size: 36px; display: block; margin-bottom: var(--space-2); }
+
+.profile-equipped-card__name {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  line-height: 1.8;
+}
+
+.profile-equipped-card__slot {
+  font-size: var(--mono-sm);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ─── Achievements Grid ─── */
+.profile-achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.profile-achievement {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  transition: border-color var(--transition);
+}
+
+.profile-achievement.unlocked  { border-color: rgba(57,255,106,0.2); }
+.profile-achievement.locked    { opacity: 0.4; }
+
+.profile-achievement__icon { font-size: 32px; flex-shrink: 0; }
+
+.profile-achievement__name {
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-1);
+}
+
+.profile-achievement__desc { font-size: var(--mono-sm); color: var(--text-dim); line-height: 1.5; }
+.profile-achievement__date { font-size: var(--mono-sm); color: var(--green); margin-top: var(--space-1); }
+
+/* ─── Bid History ─── */
+.profile-bid-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.profile-bid-row {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-4) var(--space-5);
+  display: grid;
+  grid-template-columns: auto 1fr 1fr auto;
+  gap: var(--space-4);
+  align-items: center;
+  font-size: var(--mono-md);
+}
+
+.profile-bid-row__city {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text);
+  letter-spacing: 1px;
+}
+
+.profile-bid-row__amount { color: var(--gold); font-family: var(--font-pixel); font-size: var(--px-xs); }
+.profile-bid-row__won    { color: var(--green); font-family: var(--font-pixel); font-size: var(--px-xs); }
+.profile-bid-row__lost   { color: var(--red);   font-family: var(--font-pixel); font-size: var(--px-xs); }
+
+@media (max-width: 900px) {
+  .profile-header__inner { flex-direction: column; }
+  .profile-wallet { min-width: auto; width: 100%; }
+  .profile-tabs { padding: 0 var(--space-5); }
+  .profile-content { padding: var(--space-5); }
+  .profile-bid-row { grid-template-columns: auto 1fr auto; }
+  .profile-bid-row > *:nth-child(3) { display: none; }
+}

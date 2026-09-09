@@ -1,0 +1,788 @@
+/* ============================================================
+   BUTTONS.CSS — The Great Pixels War
+   All button variants, sizes, icon buttons, tab buttons,
+   filter buttons, and special action buttons
+   Depends on: base.css
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────
+   BASE BUTTON
+   All buttons share these core styles
+───────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  letter-spacing: 1px;
+  line-height: 1;
+  padding: 0.55rem 1.1rem;
+  border: var(--border-w) solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  transition:
+    color var(--transition),
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform 0.08s ease;
+  image-rendering: pixelated;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Pressed effect — all buttons */
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none !important;
+}
+
+/* Disabled state — all buttons */
+.btn:disabled,
+.btn[disabled],
+.btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/* ─────────────────────────────────────────
+   SIZES
+───────────────────────────────────────── */
+
+/* Extra small */
+.btn--xs {
+  font-size: var(--px-xs);
+  padding: 3px 8px;
+}
+
+/* Small */
+.btn--sm {
+  font-size: var(--px-xs);
+  padding: 0.4rem 0.8rem;
+}
+
+/* Large */
+.btn--lg {
+  font-size: var(--px-md);
+  padding: 0.8rem 1.8rem;
+}
+
+/* Extra large — hero CTAs */
+.btn--xl {
+  font-size: var(--px-lg);
+  padding: 1rem 2.4rem;
+}
+
+/* Full width */
+.btn--full {
+  width: 100%;
+}
+
+/* Square icon button */
+.btn--square {
+  padding: 0.55rem;
+  aspect-ratio: 1;
+}
+
+.btn--square.btn--sm  { padding: 0.4rem; }
+.btn--square.btn--lg  { padding: 0.8rem; }
+
+
+/* ─────────────────────────────────────────
+   COLOUR VARIANTS
+───────────────────────────────────────── */
+
+/* GREEN — primary action (Play, Join, Confirm) */
+.btn--green {
+  border-color: var(--green);
+  background: var(--green);
+  color: var(--bg);
+  box-shadow: 0 0 12px rgba(57, 255, 106, 0.3);
+}
+
+.btn--green:hover {
+  box-shadow: 0 0 22px rgba(57, 255, 106, 0.6),
+              0 0 44px rgba(57, 255, 106, 0.15);
+}
+
+/* GREEN OUTLINE — secondary action */
+.btn--green-outline {
+  border-color: var(--green);
+  background: transparent;
+  color: var(--green);
+}
+
+.btn--green-outline:hover {
+  background: var(--green-subtle);
+  box-shadow: 0 0 14px rgba(57, 255, 106, 0.2);
+}
+
+/* RED — danger, war, leave, delete */
+.btn--red {
+  border-color: var(--red);
+  background: transparent;
+  color: var(--red);
+}
+
+.btn--red:hover {
+  background: var(--red);
+  color: var(--bg);
+  box-shadow: 0 0 16px rgba(255, 58, 58, 0.5);
+}
+
+/* RED SOLID */
+.btn--red-solid {
+  border-color: var(--red);
+  background: var(--red);
+  color: var(--bg);
+  box-shadow: 0 0 10px rgba(255, 58, 58, 0.3);
+}
+
+.btn--red-solid:hover {
+  box-shadow: 0 0 20px rgba(255, 58, 58, 0.6);
+}
+
+/* YELLOW — alerts, bids, season war */
+.btn--yellow {
+  border-color: var(--yellow);
+  background: transparent;
+  color: var(--yellow);
+}
+
+.btn--yellow:hover {
+  background: var(--yellow);
+  color: var(--bg);
+  box-shadow: 0 0 16px rgba(245, 200, 66, 0.4);
+}
+
+/* YELLOW SOLID */
+.btn--yellow-solid {
+  border-color: var(--yellow);
+  background: var(--yellow);
+  color: var(--bg);
+  box-shadow: 0 0 10px rgba(245, 200, 66, 0.3);
+}
+
+.btn--yellow-solid:hover {
+  box-shadow: 0 0 20px rgba(245, 200, 66, 0.6);
+}
+
+/* CYAN — info, watch, spectate */
+.btn--cyan {
+  border-color: var(--cyan);
+  background: transparent;
+  color: var(--cyan);
+}
+
+.btn--cyan:hover {
+  background: var(--cyan-dim);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.3);
+}
+
+/* BLUE — quick match, links */
+.btn--blue {
+  border-color: var(--blue);
+  background: transparent;
+  color: var(--blue);
+}
+
+.btn--blue:hover {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(58, 127, 255, 0.4);
+}
+
+/* DIAMOND — premium, shop, VIP */
+.btn--diamond {
+  border-color: var(--diamond);
+  background: transparent;
+  color: var(--diamond);
+}
+
+.btn--diamond:hover {
+  background: var(--diamond-dim);
+  box-shadow: 0 0 16px var(--diamond-glow);
+}
+
+/* DIAMOND SOLID — buy with real money */
+.btn--diamond-solid {
+  border-color: var(--diamond);
+  background: linear-gradient(135deg, var(--diamond-dim), #0d3a55);
+  color: var(--diamond);
+  box-shadow: 0 0 12px var(--diamond-glow);
+  animation: pulse-diamond 3s ease-in-out infinite;
+}
+
+.btn--diamond-solid:hover {
+  background: linear-gradient(135deg, #1a5a80, var(--diamond-dim));
+  box-shadow: 0 0 24px var(--diamond-glow);
+}
+
+/* GHOST — subtle, secondary */
+.btn--ghost {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--text-dim);
+}
+
+.btn--ghost:hover {
+  border-color: var(--border2);
+  color: var(--text);
+  background: var(--bg3);
+}
+
+/* DARK — panel actions */
+.btn--dark {
+  border-color: var(--border);
+  background: var(--bg3);
+  color: var(--text);
+}
+
+.btn--dark:hover {
+  border-color: var(--border2);
+  background: var(--panel);
+}
+
+/* BRONZE SILVER GOLD — currency shop buttons */
+.btn--bronze {
+  border-color: var(--bronze);
+  background: transparent;
+  color: var(--bronze);
+}
+
+.btn--bronze:hover {
+  background: rgba(205, 127, 50, 0.15);
+  box-shadow: 0 0 12px rgba(205, 127, 50, 0.3);
+}
+
+.btn--silver {
+  border-color: var(--silver);
+  background: transparent;
+  color: var(--silver);
+}
+
+.btn--silver:hover {
+  background: rgba(176, 184, 200, 0.15);
+  box-shadow: 0 0 12px rgba(176, 184, 200, 0.3);
+}
+
+.btn--gold {
+  border-color: var(--gold);
+  background: transparent;
+  color: var(--gold);
+}
+
+.btn--gold:hover {
+  background: rgba(245, 200, 66, 0.12);
+  box-shadow: 0 0 12px rgba(245, 200, 66, 0.3);
+}
+
+
+/* ─────────────────────────────────────────
+   ICON BUTTONS (navbar icons)
+───────────────────────────────────────── */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: var(--border-w) solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background var(--transition);
+  position: relative;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.btn-icon:hover {
+  border-color: var(--border2);
+  color: var(--text);
+  background: var(--bg3);
+}
+
+.btn-icon.active {
+  border-color: var(--green);
+  color: var(--green);
+  background: var(--green-subtle);
+}
+
+/* Notification badge on icon buttons */
+.btn-icon__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 14px;
+  height: 14px;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  line-height: 1;
+  box-shadow: 0 0 6px var(--red-glow);
+}
+
+
+/* ─────────────────────────────────────────
+   TAB BUTTONS
+   Used in lobby, leaderboard, shop, profile
+───────────────────────────────────────── */
+.tab-group {
+  display: flex;
+  border: var(--border-w) solid var(--border);
+  overflow: hidden;
+  flex-wrap: nowrap;
+}
+
+.tab-btn {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: color var(--transition), background var(--transition);
+  white-space: nowrap;
+  line-height: 1.8;
+}
+
+.tab-btn:last-child {
+  border-right: none;
+}
+
+.tab-btn:hover:not(.tab-btn--active) {
+  background: var(--bg3);
+  color: var(--text);
+}
+
+.tab-btn--active {
+  background: var(--green);
+  color: var(--bg);
+  cursor: default;
+}
+
+/* Yellow active variant — leaderboard period */
+.tab-group--yellow .tab-btn--active {
+  background: var(--yellow);
+  color: var(--bg);
+}
+
+/* Underline style tabs */
+.tab-group--underline {
+  border: none;
+  border-bottom: var(--border-w) solid var(--border);
+  overflow: visible;
+}
+
+.tab-group--underline .tab-btn {
+  border: none;
+  border-bottom: var(--border-w) solid transparent;
+  margin-bottom: -2px;
+  padding: 0.5rem 1.2rem;
+}
+
+.tab-group--underline .tab-btn--active {
+  background: transparent;
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+
+.tab-group--underline.tab-group--yellow .tab-btn--active {
+  color: var(--yellow);
+  border-bottom-color: var(--yellow);
+  background: transparent;
+}
+
+.tab-group--underline.tab-group--cyan .tab-btn--active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+  background: transparent;
+}
+
+.tab-group--underline.tab-group--diamond .tab-btn--active {
+  color: var(--diamond);
+  border-bottom-color: var(--diamond);
+  background: transparent;
+}
+
+
+/* ─────────────────────────────────────────
+   FILTER BUTTONS
+   Compact toggle group, lobby / map selector
+───────────────────────────────────────── */
+.filter-group {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  padding: 3px 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+  line-height: 1.8;
+}
+
+.filter-btn:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.filter-btn--active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0, 229, 255, 0.07);
+}
+
+
+/* ─────────────────────────────────────────
+   MAP / OPTION SELECTOR CARDS
+   Used in Create Game modal
+───────────────────────────────────────── */
+.option-card-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--space-2);
+}
+
+.option-card {
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-3) var(--space-2);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+  user-select: none;
+}
+
+.option-card:hover {
+  border-color: var(--border2);
+  background: var(--bg3);
+}
+
+.option-card--selected {
+  border-color: var(--green);
+  background: var(--green-subtle);
+  box-shadow: 0 0 12px rgba(57, 255, 106, 0.12);
+}
+
+.option-card__icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: var(--space-1);
+  line-height: 1.2;
+}
+
+.option-card__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.option-card--selected .option-card__label {
+  color: var(--green);
+}
+
+
+/* ─────────────────────────────────────────
+   TOGGLE SWITCH (on/off)
+───────────────────────────────────────── */
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle {
+  position: relative;
+  width: 36px;
+  height: 18px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+  flex-shrink: 0;
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background: var(--text-dim);
+  transition: transform var(--transition), background var(--transition);
+  image-rendering: pixelated;
+}
+
+.toggle.on {
+  background: var(--green-dim);
+  border-color: var(--green);
+}
+
+.toggle.on::after {
+  transform: translateX(18px);
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green-glow);
+}
+
+.toggle-label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+
+/* ─────────────────────────────────────────
+   CLOSE BUTTON (modals)
+───────────────────────────────────────── */
+.btn-close {
+  width: 28px;
+  height: 28px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.btn-close:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(255, 58, 58, 0.1);
+}
+
+
+/* ─────────────────────────────────────────
+   HAMBURGER BUTTON (mobile nav)
+───────────────────────────────────────── */
+.btn-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: var(--border-w) solid var(--border);
+  cursor: pointer;
+  padding: 6px;
+  transition: border-color var(--transition);
+  flex-shrink: 0;
+}
+
+.btn-hamburger:hover {
+  border-color: var(--green);
+}
+
+.btn-hamburger__line {
+  width: 100%;
+  height: 2px;
+  background: var(--text-dim);
+  transition:
+    transform var(--transition),
+    opacity var(--transition),
+    background var(--transition);
+}
+
+.btn-hamburger:hover .btn-hamburger__line {
+  background: var(--green);
+}
+
+.btn-hamburger.open .btn-hamburger__line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.btn-hamburger.open .btn-hamburger__line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.btn-hamburger.open .btn-hamburger__line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .btn-hamburger { display: flex; }
+}
+
+
+/* ─────────────────────────────────────────
+   COPY BUTTON
+───────────────────────────────────────── */
+.btn-copy {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  padding: 3px 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+}
+
+.btn-copy:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.btn-copy.copied {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+
+/* ─────────────────────────────────────────
+   SORT BUTTON (table column headers)
+───────────────────────────────────────── */
+.btn-sort {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  letter-spacing: 1px;
+  transition: color var(--transition);
+  white-space: nowrap;
+}
+
+.btn-sort:hover          { color: var(--text); }
+.btn-sort--asc::after    { content: ' ▲'; font-size: 8px; color: var(--yellow); }
+.btn-sort--desc::after   { content: ' ▼'; font-size: 8px; color: var(--yellow); }
+
+
+/* ─────────────────────────────────────────
+   PAGINATION
+───────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
+.page-btn {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.page-btn:hover              { border-color: var(--border2); color: var(--text); }
+.page-btn--active            { border-color: var(--green); color: var(--green); background: var(--green-subtle); cursor: default; }
+.page-btn--prev::before      { content: '←'; }
+.page-btn--next::after       { content: '→'; }
+
+
+/* ─────────────────────────────────────────
+   QUICK ACTIONS (Season War)
+───────────────────────────────────────── */
+.quick-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.quick-action-btn {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.quick-action-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0, 229, 255, 0.06);
+}
+
+.quick-action-btn.danger:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(255, 58, 58, 0.06);
+}
+
+
+/* ─────────────────────────────────────────
+   VIP BUTTONS
+───────────────────────────────────────── */
+.btn--vip-gold {
+  border-color: var(--vip-gold);
+  background: linear-gradient(135deg, var(--yellow-dim), rgba(122, 96, 16, 0.5));
+  color: var(--vip-gold);
+  box-shadow: 0 0 10px rgba(245, 200, 66, 0.2);
+}
+
+.btn--vip-gold:hover {
+  box-shadow: 0 0 20px rgba(245, 200, 66, 0.4);
+}
+
+.btn--vip-diamond {
+  border-color: var(--vip-diamond);
+  background: linear-gradient(135deg, var(--diamond-dim), rgba(13, 58, 85, 0.5));
+  color: var(--vip-diamond);
+  box-shadow: 0 0 10px var(--diamond-glow);
+  animation: pulse-diamond 3s ease-in-out infinite;
+}
+
+.btn--vip-diamond:hover {
+  box-shadow: 0 0 24px var(--diamond-glow);
+}

@@ -1,0 +1,260 @@
+/* ============================================================
+   ABOUT.CSS — The Great Pixels War
+   Hero, content sections, roadmap timeline, how-to-play
+   mode guides, currency guide rows, team grid, social
+   Depends on: base.css, buttons.css, panels.css
+   ============================================================ */
+
+.about-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+/* ─── Hero ─── */
+.about-hero {
+  position: relative;
+  padding: var(--space-12) var(--space-8);
+  text-align: center;
+  overflow: hidden;
+  border-bottom: var(--border-w) solid var(--border);
+}
+
+.about-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.about-hero__eyebrow {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 4px;
+}
+
+.about-hero__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-hero);
+  color: var(--green);
+  text-shadow: 0 0 30px rgba(57,255,106,0.5);
+  line-height: 1.8;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.about-hero__desc {
+  font-size: var(--mono-lg);
+  color: var(--text-dim);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.about-hero__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ─── Content wrapper ─── */
+.about-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-12);
+  width: 100%;
+}
+
+.about-section {
+  padding: var(--space-10) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-section:last-child { border-bottom: none; }
+
+/* ─── Roadmap (reuses base panel styles + additions) ─── */
+.roadmap {
+  position: relative;
+  padding-left: var(--space-8);
+}
+
+.roadmap::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: var(--border-w);
+  background: linear-gradient(180deg, var(--green), var(--border));
+}
+
+.road-item {
+  position: relative;
+  margin-bottom: var(--space-4);
+  padding: var(--space-5);
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  transition: border-color var(--transition);
+}
+
+.road-item:hover { border-color: var(--border2); }
+
+.road-item::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-8) + 2px);
+  top: var(--space-5);
+  width: 12px;
+  height: 12px;
+  background: var(--bg);
+  border: var(--border-w) solid var(--border2);
+}
+
+.road-item.done::before { background: var(--green);  border-color: var(--green); }
+.road-item.wip::before  { background: var(--yellow); border-color: var(--yellow); animation: blink 1.5s step-end infinite; }
+
+.road-tag {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  padding: 2px var(--space-2);
+  border: 1px solid;
+  display: inline-block;
+  margin-bottom: var(--space-2);
+  letter-spacing: 1px;
+}
+
+.road-tag--done { border-color: var(--green);    color: var(--green); }
+.road-tag--wip  { border-color: var(--yellow);   color: var(--yellow); }
+.road-tag--plan { border-color: var(--text-dim); color: var(--text-dim); }
+
+.road-item__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--text);
+  margin-bottom: var(--space-2);
+  letter-spacing: 1px;
+}
+
+.road-item__desc {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ─── How-to-play mode guides ─── */
+.about-modes-guide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-5);
+}
+
+.about-mode-guide {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-5);
+  transition: border-color var(--transition);
+}
+
+.about-mode-guide:hover { border-color: var(--border2); }
+
+.about-mode-guide__icon {
+  font-size: 36px;
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.about-mode-guide__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-sm);
+  color: var(--green);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-4);
+}
+
+.about-mode-guide__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.about-guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.about-guide-step span {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--green-dim);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── Currency Guide ─── */
+.about-currency-guide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.about-currency-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  transition: border-color var(--transition);
+}
+
+.about-currency-row:hover { border-color: var(--border2); }
+
+.about-currency-row__icon {
+  font-size: 36px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.about-currency-row__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-md);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-2);
+}
+
+.about-currency-row__desc {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ─── Team grid (reuses panels.css .team-card) ─── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .about-hero { padding: var(--space-8) var(--space-5); }
+  .about-content { padding: 0 var(--space-5) var(--space-8); }
+  .about-modes-guide { grid-template-columns: 1fr; }
+  .roadmap { padding-left: var(--space-6); }
+}

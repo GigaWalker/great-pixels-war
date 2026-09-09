@@ -1,0 +1,304 @@
+/* ============================================================
+   LOBBY.CSS — The Great Pixels War
+   Lobby layout, sidebar, chat panel, toolbar, table rows
+   Depends on: base.css, buttons.css, forms.css, panels.css
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────
+   PAGE LAYOUT
+───────────────────────────────────────── */
+.lobby-page {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  max-width: var(--content-max);
+  margin: 0 auto;
+  width: 100%;
+  min-height: calc(100vh - var(--navbar-h));
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .lobby-page {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .lobby-page {
+    grid-template-columns: 1fr;
+    padding: var(--space-3);
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   SIDEBAR
+───────────────────────────────────────── */
+.lobby-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: sticky;
+  top: calc(var(--navbar-h) + var(--space-4));
+  max-height: calc(100vh - var(--navbar-h) - var(--space-8));
+  overflow-y: auto;
+}
+
+.lobby-panel {
+  padding: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .lobby-sidebar {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   LOBBY CHAT PANEL
+───────────────────────────────────────── */
+.lobby-chat-panel {
+  display: flex;
+  flex-direction: column;
+  height: 260px;
+  overflow: hidden;
+  padding: 0;
+}
+
+.lobby-chat-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+  flex-shrink: 0;
+}
+
+.lobby-chat-tabs {
+  display: flex;
+  gap: 0;
+}
+
+.lobby-chat-tab {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  padding: var(--space-1) var(--space-3);
+  background: transparent;
+  border: none;
+  border-bottom: var(--border-w) solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+}
+
+.lobby-chat-tab:hover {
+  color: var(--text-dim);
+}
+
+.lobby-chat-tab.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+
+.lobby-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Override btn-icon for the small expand button */
+.btn-icon--xs {
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+}
+
+
+/* ─────────────────────────────────────────
+   MAIN AREA
+───────────────────────────────────────── */
+.lobby-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+
+/* ─────────────────────────────────────────
+   TOOLBAR
+───────────────────────────────────────── */
+.lobby-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Mode tab group — scrollable on small screens */
+.lobby-toolbar .tab-group {
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-wrap: nowrap;
+}
+
+.lobby-toolbar .tab-group::-webkit-scrollbar {
+  display: none;
+}
+
+.lobby-toolbar .tab-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Filter groups — wrap */
+.lobby-toolbar .filter-group {
+  flex-wrap: wrap;
+}
+
+
+/* ─────────────────────────────────────────
+   ACTIONS ROW (search + create + quick)
+───────────────────────────────────────── */
+.lobby-actions-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .lobby-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lobby-actions-row .search-wrap {
+    max-width: none;
+  }
+
+  .lobby-actions-row .btn {
+    width: 100%;
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   GAME TABLE — override columns for lobby
+───────────────────────────────────────── */
+.lobby-page .game-table__head,
+.lobby-page .game-row {
+  grid-template-columns: 2.5fr 0.8fr 1fr 0.8fr 0.8fr 0.9fr 120px;
+}
+
+@media (max-width: 1100px) {
+  .lobby-page .game-table__head,
+  .lobby-page .game-row {
+    grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+  }
+
+  /* Hide mode and turn columns */
+  .lobby-page .game-table__head > *:nth-child(2),
+  .lobby-page .game-row        > *:nth-child(2),
+  .lobby-page .game-table__head > *:nth-child(5),
+  .lobby-page .game-row        > *:nth-child(5) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .lobby-page .game-table__head {
+    display: none;
+  }
+
+  .lobby-page .game-row {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+  }
+
+  .lobby-page .game-row > *:not(:first-child):not(:last-child) {
+    display: none;
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   GAME ROW — mode badge
+───────────────────────────────────────── */
+.game-row__mode-badge {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  vertical-align: middle;
+}
+
+.game-row__mode-badge--season  { border-color: rgba(245,200,66,0.4);  color: var(--yellow);  }
+.game-row__mode-badge--story   { border-color: rgba(0,229,255,0.4);   color: var(--cyan);    }
+.game-row__mode-badge--quick   { border-color: rgba(57,255,106,0.4);  color: var(--green);   }
+.game-row__mode-badge--custom  { border-color: var(--border2);        color: var(--text-dim);}
+.game-row__mode-badge--private { border-color: rgba(255,58,58,0.4);   color: var(--red);     }
+.game-row__mode-badge--sandbox { border-color: rgba(79,195,247,0.4);  color: var(--diamond); }
+
+
+/* ─────────────────────────────────────────
+   EMPTY STATE
+───────────────────────────────────────── */
+.lobby-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-6);
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.lobby-empty__icon {
+  font-size: 48px;
+  opacity: 0.4;
+}
+
+.lobby-empty__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-md);
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.lobby-empty__desc {
+  font-size: var(--mono-md);
+  color: var(--text-muted);
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+
+/* ─────────────────────────────────────────
+   TABLE LOADING SKELETON
+───────────────────────────────────────── */
+.lobby-table-loading {
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+
+/* ─────────────────────────────────────────
+   SWITCH LOBBY CHAT (mini function)
+───────────────────────────────────────── */
+/* Active tab highlight handled by .lobby-chat-tab.active */

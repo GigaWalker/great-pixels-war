@@ -1,0 +1,148 @@
+/* ============================================================
+   NAVBAR.CSS — The Great Pixels War
+   Depends on: base.css, buttons.css
+   ============================================================ */
+
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--navbar-h);
+  z-index: var(--z-navbar);
+  background: rgba(10, 12, 16, 0.98);
+  border-bottom: var(--border-w) solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  gap: var(--space-4);
+  box-shadow: 0 0 24px rgba(57,255,106,0.12), 0 4px 16px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+}
+
+/* ── LEFT: Logo ── */
+.navbar__left { flex-shrink: 0; }
+
+.navbar__logo {
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 1px; padding: 0; line-height: 1;
+  transition: opacity var(--transition);
+}
+.navbar__logo:hover { opacity: 0.85; }
+
+.navbar__logo-the {
+  font-family: var(--font-pixel); font-size: 5px;
+  color: var(--text-dim); letter-spacing: 3px;
+}
+.navbar__logo-main {
+  font-family: var(--font-pixel); font-size: 7px;
+  color: var(--green); text-shadow: 0 0 12px rgba(57,255,106,0.5);
+  letter-spacing: 1px; white-space: nowrap;
+}
+.navbar__logo-war {
+  color: var(--red); text-shadow: 0 0 12px rgba(255,58,58,0.5);
+}
+
+/* ── CENTER: Nav links ── */
+.navbar__center { flex: 1; display: flex; justify-content: center; overflow: hidden; }
+
+.navbar__links {
+  display: flex; align-items: stretch;
+  height: var(--navbar-h); list-style: none; margin: 0; padding: 0;
+}
+
+.navbar__link {
+  display: flex; align-items: center; height: 100%;
+  padding: 0 var(--space-4);
+  font-family: var(--font-pixel); font-size: var(--px-xs);
+  color: var(--text-dim); text-decoration: none; letter-spacing: 1px;
+  border-right: 1px solid var(--border);
+  border-bottom: var(--border-w) solid transparent;
+  margin-bottom: calc(-1 * var(--border-w));
+  transition: color var(--transition), background var(--transition), border-bottom-color var(--transition);
+  white-space: nowrap; cursor: pointer;
+}
+.navbar__links li:first-child .navbar__link { border-left: 1px solid var(--border); }
+.navbar__link:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+.navbar__link.active { color: var(--green); border-bottom-color: var(--green); background: var(--green-subtle); }
+
+.navbar__link--highlight { color: var(--yellow); position: relative; }
+.navbar__link--highlight::after {
+  content: 'LIVE'; position: absolute; top: 10px; right: 4px;
+  font-family: var(--font-pixel); font-size: 4px;
+  color: var(--red); letter-spacing: 1px;
+  animation: blink 1.5s step-end infinite;
+}
+.navbar__link--highlight:hover,
+.navbar__link--highlight.active {
+  color: var(--yellow); border-bottom-color: var(--yellow);
+  background: rgba(245,200,66,0.05);
+}
+
+/* ── RIGHT ── */
+.navbar__right { display: flex; align-items: center; gap: var(--space-3); flex-shrink: 0; }
+.navbar__icons { display: flex; align-items: center; gap: var(--space-2); }
+.navbar__auth  { display: flex; align-items: center; gap: var(--space-2); }
+
+/* Season pill */
+.navbar__season-pill {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: rgba(245,200,66,0.07); border: 1px solid rgba(245,200,66,0.3);
+  cursor: pointer; transition: all var(--transition);
+}
+.navbar__season-pill:hover { background: rgba(245,200,66,0.12); border-color: var(--yellow); }
+.navbar__season-pill-dot {
+  width: 6px; height: 6px; background: var(--yellow);
+  box-shadow: 0 0 6px rgba(245,200,66,0.8); flex-shrink: 0;
+  animation: blink 2s step-end infinite;
+}
+.navbar__season-pill-text {
+  font-family: var(--font-pixel); font-size: 5px;
+  color: var(--yellow); letter-spacing: 1px; white-space: nowrap;
+}
+
+/* Avatar button */
+.navbar__avatar-wrap { position: relative; }
+.navbar__avatar-btn {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: var(--bg3); border: var(--border-w) solid var(--border);
+  cursor: pointer; height: 38px; position: relative;
+  transition: border-color var(--transition), background var(--transition);
+}
+.navbar__avatar-btn:hover,
+.navbar__avatar-btn.open { border-color: var(--green); background: var(--panel); }
+
+.navbar__avatar-icon { font-size: 18px; line-height: 1; flex-shrink: 0; }
+.navbar__avatar-info { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
+.navbar__avatar-name {
+  font-family: var(--font-pixel); font-size: 6px; color: var(--green);
+  letter-spacing: 1px; white-space: nowrap; max-width: 100px;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.navbar__avatar-name.vip-gold    { color: var(--vip-gold); }
+.navbar__avatar-name.vip-diamond { color: var(--vip-diamond); }
+.navbar__avatar-rank { font-size: 11px; color: var(--text-dim); white-space: nowrap; }
+.navbar__avatar-caret { font-size: 10px; color: var(--text-dim); flex-shrink: 0; transition: transform var(--transition); }
+.navbar__avatar-btn.open .navbar__avatar-caret { transform: rotate(180deg); }
+.navbar__vip-badge { position: absolute; top: -6px; left: 24px; font-size: 10px; }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .navbar__avatar-info { display: none; }
+  .navbar__avatar-caret { display: none; }
+  .navbar__avatar-btn { padding: var(--space-1) var(--space-2); }
+}
+@media (max-width: 900px) {
+  .navbar__season-pill { display: none; }
+}
+@media (max-width: 768px) {
+  .navbar__center { display: none; }
+  .navbar__auth .btn:first-child { display: none; }
+  .navbar { padding: 0 var(--space-4); gap: var(--space-3); }
+}
+@media (max-width: 480px) {
+  .navbar__logo-main { font-size: 6px; }
+  .navbar__auth { display: none; }
+}

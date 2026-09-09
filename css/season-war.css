@@ -1,0 +1,666 @@
+/* ============================================================
+   SEASON-WAR.CSS — The Great Pixels War
+   Season header, phase indicator, three-column layout,
+   map container/toolbar, bid panels, leaderboard,
+   rewards, turn status bar
+   Depends on: base.css, buttons.css, forms.css, panels.css
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────
+   PAGE
+───────────────────────────────────────── */
+.sw-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+
+/* ─────────────────────────────────────────
+   SEASON HEADER
+───────────────────────────────────────── */
+.sw-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-5) var(--space-8);
+  background: var(--bg2);
+  border-bottom: var(--border-w) solid var(--border);
+}
+
+.sw-header__season-label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  margin-bottom: var(--space-1);
+}
+
+.sw-header__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xl);
+  color: var(--yellow);
+  text-shadow: 0 0 20px var(--yellow-glow);
+  margin: 0 0 var(--space-1) 0;
+  letter-spacing: 1px;
+}
+
+.sw-header__dates {
+  font-size: var(--mono-md);
+  color: var(--text-dim);
+}
+
+.sw-header__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+@media (max-width: 1024px) {
+  .sw-header {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .sw-header__center {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .sw-header {
+    grid-template-columns: 1fr;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .sw-header__center { order: unset; }
+  .sw-header__right  { align-items: flex-start; }
+}
+
+
+/* ─────────────────────────────────────────
+   PHASE INDICATOR
+───────────────────────────────────────── */
+.sw-phase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.sw-phase__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.sw-phase__item--done    { color: var(--green-dim); }
+.sw-phase__item--active  { color: var(--yellow); }
+
+.sw-phase__dot {
+  width: 12px;
+  height: 12px;
+  background: var(--bg3);
+  border: var(--border-w) solid var(--border2);
+}
+
+.sw-phase__item--done   .sw-phase__dot { background: var(--green-dim); border-color: var(--green); }
+.sw-phase__item--active .sw-phase__dot {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  box-shadow: 0 0 10px var(--yellow-glow);
+  animation: pulse-green 2s ease-in-out infinite;
+}
+
+.sw-phase__line {
+  width: 60px;
+  height: 2px;
+  background: var(--border);
+  margin-bottom: var(--space-5);
+  flex-shrink: 0;
+}
+
+.sw-phase__line--done {
+  background: var(--green-dim);
+}
+
+@media (max-width: 600px) {
+  .sw-phase { display: none; }
+}
+
+
+/* ─────────────────────────────────────────
+   BID COUNTDOWN
+───────────────────────────────────────── */
+.sw-bid-countdown {
+  text-align: right;
+}
+
+.sw-bid-countdown__label {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-2);
+}
+
+.sw-bid-countdown__timer {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  justify-content: flex-end;
+}
+
+.sw-bid-countdown__num {
+  font-family: var(--font-pixel);
+  font-size: var(--px-lg);
+  color: var(--yellow);
+  text-shadow: 0 0 10px var(--yellow-glow);
+  min-width: 28px;
+  text-align: center;
+}
+
+.sw-bid-countdown__sep {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+}
+
+
+/* ─────────────────────────────────────────
+   MY TERRITORY
+───────────────────────────────────────── */
+.sw-my-territory {
+  text-align: right;
+}
+
+.sw-my-territory__label {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.sw-my-territory__value {
+  font-family: var(--font-pixel);
+  font-size: var(--px-md);
+  color: var(--green);
+  display: block;
+}
+
+.sw-my-territory__rank {
+  font-size: var(--mono-sm);
+  color: var(--text-dim);
+}
+
+
+/* ─────────────────────────────────────────
+   THREE-COLUMN BODY
+───────────────────────────────────────── */
+.sw-body {
+  display: grid;
+  grid-template-columns: 280px 1fr 260px;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  flex: 1;
+  align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .sw-body { grid-template-columns: 240px 1fr 240px; }
+}
+
+@media (max-width: 1024px) {
+  .sw-body {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .sw-center {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .sw-body {
+    grid-template-columns: 1fr;
+    padding: var(--space-3);
+  }
+
+  .sw-center { order: unset; }
+}
+
+
+/* ─────────────────────────────────────────
+   SW PANELS (left/right columns)
+───────────────────────────────────────── */
+.sw-left,
+.sw-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: sticky;
+  top: calc(var(--navbar-h) + var(--space-4));
+  max-height: calc(100vh - var(--navbar-h) - 80px);
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .sw-left, .sw-right {
+    position: static;
+    max-height: none;
+  }
+}
+
+.sw-panel {
+  background: var(--panel);
+  border: var(--border-w) solid var(--border);
+  overflow: hidden;
+}
+
+.sw-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+  flex-shrink: 0;
+}
+
+.sw-panel__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
+
+.sw-panel__count {
+  font-size: var(--mono-sm);
+  color: var(--text-muted);
+}
+
+.sw-panel__body {
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sw-panel__footer {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border);
+  background: var(--bg3);
+}
+
+.sw-panel__footer .btn { width: 100%; }
+
+
+/* ─────────────────────────────────────────
+   BID ROW (my bids + hot cities)
+───────────────────────────────────────── */
+.sw-bid-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.sw-bid-row:last-child { border-bottom: none; }
+.sw-bid-row:hover { background: var(--bg3); padding: var(--space-2) var(--space-2); margin: 0 calc(-1 * var(--space-2)); }
+
+.sw-bid-row__city { flex: 1; min-width: 0; }
+
+.sw-bid-row__city-name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text);
+  display: block;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sw-bid-row__city-meta {
+  font-size: var(--mono-sm);
+  color: var(--text-dim);
+}
+
+.sw-bid-row__amount {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.sw-bid-row__status-leading  { color: var(--green);  font-size: var(--mono-sm); }
+.sw-bid-row__status-outbid   { color: var(--red);    font-size: var(--mono-sm); animation: blink 1s step-end infinite; }
+
+
+/* ─────────────────────────────────────────
+   BOT ORDERS
+───────────────────────────────────────── */
+.sw-orders {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sw-order-item {
+  align-items: flex-start;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.sw-order-item:last-child { border-bottom: none; }
+
+
+/* ─────────────────────────────────────────
+   CENTER: MAP
+───────────────────────────────────────── */
+.sw-center {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* Map toolbar */
+.sw-map-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg3);
+  border: var(--border-w) solid var(--border);
+  border-bottom: none;
+  padding: var(--space-2) var(--space-4);
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.sw-map-toolbar__left,
+.sw-map-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sw-map-btn {
+  font-size: 5px !important;
+  padding: 3px 8px !important;
+}
+
+.sw-map-btn--active {
+  border-color: var(--green) !important;
+  color: var(--green) !important;
+  background: var(--green-subtle) !important;
+}
+
+/* Day/night indicator */
+.sw-day-night {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px var(--space-3);
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.sw-day-night__icon  { font-size: 14px; }
+.sw-day-night__label {
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+/* Map container */
+.sw-map-container {
+  background: var(--bg);
+  border: var(--border-w) solid var(--border);
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.sw-map-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sw-map-overlay {
+  position: absolute;
+  bottom: var(--space-5);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(10, 12, 16, 0.85);
+  border: 1px solid var(--border);
+  padding: var(--space-3) var(--space-5);
+  backdrop-filter: blur(4px);
+}
+
+.sw-map-overlay__title {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--green);
+  letter-spacing: 1px;
+}
+
+.sw-map-overlay__sub {
+  font-size: var(--mono-sm);
+  color: var(--text-dim);
+}
+
+/* Alliance bar */
+.sw-alliance-bar {
+  background: var(--bg2);
+  border: var(--border-w) solid var(--border);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.sw-alliance-bar__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.sw-alliance-bar__label {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.sw-alliance-bar__name {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
+
+.sw-alliance-bar__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+
+/* ─────────────────────────────────────────
+   SEASON LEADERBOARD (right panel)
+───────────────────────────────────────── */
+.sw-lb-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.sw-lb-row:last-child { border-bottom: none; }
+.sw-lb-row:hover { background: var(--bg3); }
+
+.sw-lb-row__rank {
+  font-family: var(--font-pixel);
+  font-size: var(--px-xs);
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sw-lb-row__rank--1 { color: var(--yellow); }
+.sw-lb-row__rank--2 { color: var(--silver); }
+.sw-lb-row__rank--3 { color: var(--bronze); }
+.sw-lb-row__rank--other { color: var(--text-muted); }
+
+.sw-lb-row__name {
+  flex: 1;
+  font-size: var(--mono-md);
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sw-lb-row__name.is-you { color: var(--green); }
+
+.sw-lb-row__tiles {
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+
+/* ─────────────────────────────────────────
+   SEASON REWARDS
+───────────────────────────────────────── */
+.sw-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sw-reward-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.sw-reward-row--highlight {
+  border-color: rgba(245, 200, 66, 0.3);
+  background: rgba(122, 96, 16, 0.1);
+}
+
+.sw-reward-row__rank {
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+
+.sw-reward-row__items {
+  display: flex;
+  gap: var(--space-3);
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.sw-reward-vip-note {
+  font-size: var(--mono-sm);
+  color: var(--text-muted);
+  text-align: center;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-1);
+}
+
+
+/* ─────────────────────────────────────────
+   SEASON STATS LIST
+───────────────────────────────────────── */
+.sw-stat-list { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.sw-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--mono-md);
+}
+
+.sw-stat-row:last-child { border-bottom: none; }
+.sw-stat-row__label { color: var(--text-dim); }
+.sw-stat-row__val   { color: var(--text); font-family: var(--font-pixel); font-size: var(--px-xs); }
+
+
+/* ─────────────────────────────────────────
+   TURN BAR (sticky bottom)
+───────────────────────────────────────── */
+.turn-bar {
+  position: sticky;
+  bottom: 0;
+  background: var(--bg2);
+  border-top: var(--border-w) solid var(--border);
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  z-index: var(--z-sticky);
+}
+
+@media (max-width: 768px) {
+  .turn-bar {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .turn-bar__actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .turn-bar__actions .btn {
+    flex: 1;
+  }
+}
