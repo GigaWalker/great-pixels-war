@@ -1,0 +1,91 @@
+<!-- ============================================================
+     NAVBAR.HTML — The Great Pixels War
+     Injected into #navbar-mount by navbar.js
+     ============================================================ -->
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+
+  <!-- ── LEFT: Logo ── -->
+  <div class="navbar__left">
+    <button class="navbar__logo" onclick="navigate('home')" aria-label="Go to home page">
+      <span class="navbar__logo-the">THE</span>
+      <span class="navbar__logo-main">GREAT PIXELS <span class="navbar__logo-war">WAR</span></span>
+    </button>
+  </div>
+
+  <!-- ── CENTER: Nav links (desktop) ── -->
+  <div class="navbar__center" role="menubar">
+    <ul class="navbar__links">
+      <li role="none">
+        <a class="navbar__link" href="#" data-page="home" onclick="navigate('home')" role="menuitem">HOME</a>
+      </li>
+      <li role="none">
+        <a class="navbar__link" href="#" data-page="play" onclick="navigate('play')" role="menuitem">PLAY</a>
+      </li>
+      <li role="none">
+        <a class="navbar__link navbar__link--highlight" href="#" data-page="season-war" onclick="navigate('season-war')" role="menuitem">SEASON WAR</a>
+      </li>
+      <li role="none">
+        <a class="navbar__link" href="#" data-page="story" onclick="navigate('story')" role="menuitem">STORY</a>
+      </li>
+      <li role="none">
+        <a class="navbar__link" href="#" data-page="leaderboard" onclick="navigate('leaderboard')" role="menuitem">RANKS</a>
+      </li>
+      <li role="none">
+        <a class="navbar__link" href="#" data-page="shop" onclick="navigate('shop')" role="menuitem">SHOP</a>
+      </li>
+      <li role="none">
+        <a class="navbar__link" href="#" data-page="about" onclick="navigate('about')" role="menuitem">ABOUT</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── RIGHT: Icons + Auth ── -->
+  <div class="navbar__right">
+
+    <!-- Season countdown pill -->
+    <div class="navbar__season-pill" id="navSeasonPill" title="Season 12 — time remaining">
+      <span class="navbar__season-pill-dot"></span>
+      <span class="navbar__season-pill-text" id="navSeasonText">S12: 18d 7h</span>
+    </div>
+
+    <!-- Icon buttons (logged in) -->
+    <div class="navbar__icons" id="navIcons" style="display:none">
+      <button class="btn-icon" id="navNotifBtn" onclick="toggleNotifPanel()" aria-label="Notifications" title="Notifications">
+        🔔
+        <span class="btn-icon__badge" id="notifBadge" style="display:none">3</span>
+      </button>
+      <button class="btn-icon" id="navChatBtn" onclick="toggleChatOverlay()" aria-label="Chat" title="World Chat">
+        💬
+        <span class="btn-icon__badge" id="chatBadge" style="display:none">2</span>
+      </button>
+      <button class="btn-icon" onclick="openModal('settings')" aria-label="Settings" title="Settings">⚙</button>
+    </div>
+
+    <!-- Auth buttons (logged out) -->
+    <div class="navbar__auth" id="navAuth">
+      <button class="btn btn--ghost btn--sm" onclick="openModal('auth'); switchAuth('login')">LOG IN</button>
+      <button class="btn btn--green btn--sm" onclick="openModal('auth'); switchAuth('register')">JOIN WAR</button>
+    </div>
+
+    <!-- Avatar button (logged in) -->
+    <div class="navbar__avatar-wrap" id="navAvatarWrap" style="display:none">
+      <button class="navbar__avatar-btn" id="navAvatar" onclick="toggleAvatarDropdown()" aria-label="User menu" aria-haspopup="true">
+        <span class="navbar__avatar-icon" id="navAvatarIcon">🪖</span>
+        <div class="navbar__avatar-info">
+          <span class="navbar__avatar-name" id="navAvatarName">GHOST_RECON</span>
+          <span class="navbar__avatar-rank" id="navAvatarRank">Sergeant II</span>
+        </div>
+        <span class="navbar__avatar-caret">▾</span>
+        <span class="navbar__vip-badge" id="navVipBadge" style="display:none"></span>
+      </button>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <button class="btn-hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu" aria-expanded="false">
+      <span class="btn-hamburger__line"></span>
+      <span class="btn-hamburger__line"></span>
+      <span class="btn-hamburger__line"></span>
+    </button>
+
+  </div>
+</nav>
